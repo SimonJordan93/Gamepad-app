@@ -16,12 +16,18 @@ import {
 import axios from "axios";
 import Constants from "expo-constants";
 import { useWindowDimensions } from "react-native";
+import { useDebounce } from "use-debounce";
+
+import renderPlatforms from "../components/Platforms";
+import FilterModal from "../components/FilterModal";
 
 export default function HomeScreen() {
   // const [isLoading, setIsLoading] = useState(true);
   const [games, setGames] = useState([]);
   const [page, setPage] = useState(1);
   const [filterModalVisible, setFilterModalVisible] = useState(false);
+  const [gameSearch, setGameSearch] = useState("");
+  const [debouncedGameSearch] = useDebounce(gameSearch, 300); // debounce for 500ms
 
   const { height, width } = useWindowDimensions();
 
@@ -29,16 +35,19 @@ export default function HomeScreen() {
     const fetchGames = async () => {
       try {
         const response = await axios.get(
-          `https://api.rawg.io/api/games?key=b01f1892725446428389154406012e19&page=${page}`
+          `https://api.rawg.io/api/games?key=b01f1892725446428389154406012e19&search=${debouncedGameSearch}&page=${page}`
         );
-        setGames((prevGames) => [...prevGames, ...response.data.results]);
-        // setIsLoading(false);
+        if (page === 1) {
+          setGames(response.data.results);
+        } else {
+          setGames((prevGames) => [...prevGames, ...response.data.results]);
+        }
       } catch (error) {
         console.log(error);
       }
     };
     fetchGames();
-  }, [page]);
+  }, [page, debouncedGameSearch]);
 
   const handleEndReached = () => {
     setPage((prevPage) => prevPage + 1);
@@ -50,147 +59,6 @@ export default function HomeScreen() {
 
   const handleFilterClose = () => {
     setFilterModalVisible(false);
-  };
-
-  const renderPlatforms = (item) => {
-    const supportedPlatforms = item.parent_platforms;
-    // console.log(supportedPlatforms);
-    return (
-      <View style={styles.supportedPlatforms}>
-        {supportedPlatforms.map((platform) => {
-          // console.log(platform.platform.id);
-          const platformId = platform.platform.id;
-          if (platformId === 1) {
-            return (
-              <Image
-                key={platformId}
-                source={require("../assets/adaptive-icon.png")}
-                style={styles.platformLogos}
-              />
-            );
-          }
-          if (platformId === 2) {
-            return (
-              <Image
-                key={platformId}
-                source={require("../assets/adaptive-icon.png")}
-                style={styles.platformLogos}
-              />
-            );
-          }
-          if (platformId === 3) {
-            return (
-              <Image
-                key={platformId}
-                source={require("../assets/adaptive-icon.png")}
-                style={styles.platformLogos}
-              />
-            );
-          }
-          if (platformId === 4) {
-            return (
-              <Image
-                key={platformId}
-                source={require("../assets/adaptive-icon.png")}
-                style={styles.platformLogos}
-              />
-            );
-          }
-          if (platformId === 5) {
-            return (
-              <Image
-                key={platformId}
-                source={require("../assets/adaptive-icon.png")}
-                style={styles.platformLogos}
-              />
-            );
-          }
-          if (platformId === 6) {
-            return (
-              <Image
-                key={platformId}
-                source={require("../assets/adaptive-icon.png")}
-                style={styles.platformLogos}
-              />
-            );
-          }
-          if (platformId === 7) {
-            return (
-              <Image
-                key={platformId}
-                source={require("../assets/adaptive-icon.png")}
-                style={styles.platformLogos}
-              />
-            );
-          }
-          if (platformId === 8) {
-            return (
-              <Image
-                key={platformId}
-                source={require("../assets/adaptive-icon.png")}
-                style={styles.platformLogos}
-              />
-            );
-          }
-          if (platformId === 9) {
-            return (
-              <Image
-                key={platformId}
-                source={require("../assets/adaptive-icon.png")}
-                style={styles.platformLogos}
-              />
-            );
-          }
-          if (platformId === 10) {
-            return (
-              <Image
-                key={platformId}
-                source={require("../assets/adaptive-icon.png")}
-                style={styles.platformLogos}
-              />
-            );
-          }
-          if (platformId === 11) {
-            return (
-              <Image
-                key={platformId}
-                source={require("../assets/adaptive-icon.png")}
-                style={styles.platformLogos}
-              />
-            );
-          }
-          if (platformId === 12) {
-            return (
-              <Image
-                key={platformId}
-                source={require("../assets/adaptive-icon.png")}
-                style={styles.platformLogos}
-              />
-            );
-          }
-          if (platformId === 13) {
-            return (
-              <Image
-                key={platformId}
-                source={require("../assets/adaptive-icon.png")}
-                style={styles.platformLogos}
-              />
-            );
-          }
-          if (platformId === 14) {
-            return (
-              <Image
-                key={platformId}
-                source={require("../assets/adaptive-icon.png")}
-                style={styles.platformLogos}
-              />
-            );
-          } else {
-            return null;
-          }
-        })}
-      </View>
-    );
   };
 
   return (
@@ -209,6 +77,8 @@ export default function HomeScreen() {
         <View style={styles.searchBarContainer}>
           <TextInput
             style={styles.searchBarInput}
+            onChangeText={setGameSearch}
+            value={gameSearch}
             placeholder="Search games"
             placeholderTextColor="#999"
           />
@@ -230,6 +100,7 @@ export default function HomeScreen() {
         contentContainerStyle={styles.flatListContainer}
         onEndReachedThreshold={0.5}
         onEndReached={handleEndReached}
+        // windowSize={5}
         renderItem={({ item }) => (
           <View style={styles.card}>
             <Image
@@ -249,27 +120,7 @@ export default function HomeScreen() {
           </View>
         )}
       />
-      <Modal
-        visible={filterModalVisible}
-        animationType="slide"
-        onRequestClose={handleFilterClose}
-      >
-        <View style={styles.filterModalContainer}>
-          {/* Filter inputs */}
-          <TextInput style={styles.filterInput} placeholder="Type of game" />
-          <TextInput style={styles.filterInput} placeholder="Console" />
-          <TextInput style={styles.filterInput} placeholder="Release date" />
-          <TextInput style={styles.filterInput} placeholder="Rating" />
-          <TextInput style={styles.filterInput} placeholder="Name" />
-          {/* Close button */}
-          <TouchableOpacity
-            style={styles.filterButton}
-            onPress={handleFilterClose}
-          >
-            <Text style={styles.filterButtonText}>Close</Text>
-          </TouchableOpacity>
-        </View>
-      </Modal>
+      <FilterModal visible={filterModalVisible} onClose={handleFilterClose} />
     </SafeAreaView>
   );
 }
@@ -318,7 +169,6 @@ const styles = StyleSheet.create({
   filterButton: {
     paddingVertical: 10,
     alignItems: "center",
-    justifyContent: "center",
     backgroundColor: "#111",
   },
   filterButtonText: {
@@ -352,18 +202,6 @@ const styles = StyleSheet.create({
     aspectRatio: 16 / 9,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-  },
-  supportedPlatforms: {
-    flexDirection: "row",
-    paddingHorizontal: 10,
-  },
-  platformLogos: {
-    height: 20,
-    width: 20,
-    color: "black",
-
-    marginRight: 5,
-    marginTop: 2,
   },
   cardContent: {
     paddingBottom: 10,

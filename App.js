@@ -27,7 +27,7 @@ function MainTabNavigator() {
         options={{ headerShown: false }}
       />
       <Tab.Screen
-        name="Favoris"
+        name="Collection"
         component={FavoritesScreen}
         options={{ headerShown: false }}
       />
