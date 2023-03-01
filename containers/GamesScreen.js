@@ -18,10 +18,11 @@ import Constants from "expo-constants";
 import { useWindowDimensions } from "react-native";
 import { useDebounce } from "use-debounce";
 
+import Header from "../components/Header";
 import renderPlatforms from "../components/Platforms";
 import FilterModal from "../components/FilterModal";
 
-export default function HomeScreen() {
+export default function GamesScreen() {
   // const [isLoading, setIsLoading] = useState(true);
   const [games, setGames] = useState([]);
   const [page, setPage] = useState(1);
@@ -67,33 +68,7 @@ export default function HomeScreen() {
         marginTop: Platform.OS === "android" ? Constants.statusBarHeight : 0,
       }}
     >
-      <View style={styles.headerContainer}>
-        <View style={styles.logoContainer}>
-          <Image
-            source={require("../assets/adaptive-icon.png")}
-            style={styles.logo}
-          />
-        </View>
-        <View style={styles.searchBarContainer}>
-          <TextInput
-            style={styles.searchBarInput}
-            onChangeText={setGameSearch}
-            value={gameSearch}
-            placeholder="Search games"
-            placeholderTextColor="#999"
-          />
-        </View>
-        <TouchableOpacity style={styles.loginButton}>
-          <Text style={styles.loginButtonText}>Login</Text>
-        </TouchableOpacity>
-      </View>
-      <TouchableOpacity
-        activeOpacity={0.9}
-        style={styles.filterButton}
-        onPress={handleFilterPress}
-      >
-        <Text style={styles.filterButtonText}>Refine Search</Text>
-      </TouchableOpacity>
+      <Header onSearch={setGameSearch} onFilterPress={handleFilterPress} />
       <FlatList
         data={games}
         keyExtractor={(item) => String(item.id)}
@@ -126,56 +101,6 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
-  headerContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingHorizontal: 10,
-    paddingVertical: 10,
-    backgroundColor: "#111",
-  },
-  logoContainer: {
-    alignItems: "center",
-  },
-  logo: {
-    width: 40,
-    height: 40,
-    resizeMode: "contain",
-  },
-  searchBarContainer: {
-    flex: 1,
-    backgroundColor: "#222",
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    marginHorizontal: 5,
-  },
-  searchBarInput: {
-    color: "#ccc",
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  loginButton: {
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    backgroundColor: "red",
-    borderRadius: 5,
-  },
-  loginButtonText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  filterButton: {
-    paddingVertical: 10,
-    alignItems: "center",
-    backgroundColor: "#111",
-  },
-  filterButtonText: {
-    color: "red",
-    fontSize: 16,
-    fontWeight: "bold",
-  },
   flatListContainer: {
     paddingVertical: 20,
     backgroundColor: "#111",

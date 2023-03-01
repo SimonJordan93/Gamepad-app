@@ -4,51 +4,63 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Constants from "expo-constants";
 
-import HomeScreen from "./containers/HomeScreen";
 import FavoritesScreen from "./containers/FavoritesScreen";
 import ProfileScreen from "./containers/ProfileScreen";
+import HomeTabNavigator from "./Navigation/HomeTabNavigator";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-function MainTabNavigator() {
-  return (
-    <Tab.Navigator
-      screenOptions={{
-        tabBarActiveTintColor: "red",
-        tabBarInactiveTintColor: "#444",
-        tabBarActiveBackgroundColor: "#111",
-        tabBarInactiveBackgroundColor: "#111",
-      }}
-    >
-      <Tab.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{ headerShown: false }}
-      />
-      <Tab.Screen
-        name="Collection"
-        component={FavoritesScreen}
-        options={{ headerShown: false }}
-      />
-      <Tab.Screen
-        name="Profil"
-        component={ProfileScreen}
-        options={{ headerShown: false }}
-      />
-    </Tab.Navigator>
-  );
-}
+// Options for the main navigator
+const mainNavOptions = {
+  headerShown: false,
+};
+
+// Options for the tab navigator
+const tabNavOptions = {
+  tabBarActiveTintColor: "red",
+  tabBarInactiveTintColor: "#444",
+  tabBarActiveBackgroundColor: "#111",
+  tabBarInactiveBackgroundColor: "#111",
+};
+
+const homeTabOptions = {
+  tabBarLabel: "Home",
+  headerShown: false,
+};
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Main"
-          options={{ headerShown: false }}
-          component={MainTabNavigator}
-        />
+      {/* Main navigator */}
+      <Stack.Navigator screenOptions={mainNavOptions}>
+        <Stack.Screen name="Main">
+          {/* Tab navigator */}
+          {() => (
+            <Tab.Navigator screenOptions={tabNavOptions}>
+              {/* Home tab */}
+              <Tab.Screen
+                name="Home"
+                component={HomeTabNavigator}
+                options={homeTabOptions}
+              />
+
+              {/* Collection tab */}
+              <Tab.Screen
+                name="Collection"
+                component={FavoritesScreen}
+                options={{ headerShown: false }}
+              />
+
+              {/* Profil tab */}
+              <Tab.Screen
+                name="Profil"
+                component={ProfileScreen}
+                options={{ headerShown: false }}
+              />
+            </Tab.Navigator>
+          )}
+        </Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
   );
