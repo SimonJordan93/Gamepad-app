@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   View,
   Text,
@@ -14,11 +14,8 @@ export default function Header({ onSearch, onFilterPress }) {
   const navigation = useNavigation();
   const route = useRoute();
 
-  const [activeBrowseBtn, setActiveBrowseBtn] = useState("");
-
   const handleBrowsePress = (screenName) => {
     navigation.navigate(screenName);
-    setActiveBrowseBtn(screenName);
   };
 
   return (
@@ -50,40 +47,28 @@ export default function Header({ onSearch, onFilterPress }) {
       </View>
       <View style={styles.browseButtons}>
         <TouchableOpacity
-          style={[
-            styles.browseBtn,
-            activeBrowseBtn === "Games" && styles.activeBrowseBtn,
-          ]}
+          style={styles.browseBtn}
           activeOpacity={0.6}
           onPress={() => handleBrowsePress("Games")}
         >
           <Text style={styles.browseBtnTitle}>Games</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[
-            styles.browseBtn,
-            activeBrowseBtn === "Platforms" && styles.activeBrowseBtn,
-          ]}
+          style={styles.browseBtn}
           activeOpacity={0.6}
           onPress={() => handleBrowsePress("Platforms")}
         >
           <Text style={styles.browseBtnTitle}>Platforms</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[
-            styles.browseBtn,
-            activeBrowseBtn === "Genres" && styles.activeBrowseBtn,
-          ]}
+          style={styles.browseBtn}
           activeOpacity={0.6}
           onPress={() => handleBrowsePress("Genres")}
         >
           <Text style={styles.browseBtnTitle}>Genres</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[
-            styles.browseBtn,
-            activeBrowseBtn === "Stores" && styles.activeBrowseBtn,
-          ]}
+          style={styles.browseBtn}
           activeOpacity={0.6}
           onPress={() => handleBrowsePress("Stores")}
         >

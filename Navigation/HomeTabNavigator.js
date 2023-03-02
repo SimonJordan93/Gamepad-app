@@ -1,5 +1,6 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+// import { NavigationContainer } from "@react-navigation/native";
 
 import GamesScreen from "../containers/GamesScreen";
 import PlatformsScreen from "../containers/PlatformsScreen";
@@ -10,10 +11,14 @@ const Stack = createNativeStackNavigator();
 
 const HomeTabNavigator = () => (
   <Stack.Navigator screenOptions={{ headerShown: false }}>
-    <Stack.Screen name="Games">{() => <GamesScreen />}</Stack.Screen>
-    <Stack.Screen name="Platforms">{() => <PlatformsScreen />}</Stack.Screen>
-    <Stack.Screen name="Genres">{() => <GenresScreen />}</Stack.Screen>
-    <Stack.Screen name="Stores">{() => <StoresScreen />}</Stack.Screen>
+    {/* Games Stack */}
+    <Stack.Screen name="Games" component={GamesScreen} />
+    {/* Platforms Stack */}
+    <Stack.Screen name="Platforms" component={PlatformsScreen} />
+    {/* Genres Stack */}
+    <Stack.Screen name="Genres" component={GenresScreen} />
+    {/* Stores Stack */}
+    <Stack.Screen name="Stores" component={StoresScreen} />
   </Stack.Navigator>
 );
 

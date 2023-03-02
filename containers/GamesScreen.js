@@ -7,10 +7,6 @@ import {
   Image,
   FlatList,
   Platform,
-  TouchableOpacity,
-  Pressable,
-  TextInput,
-  Modal,
 } from "react-native";
 // import { ActivityIndicator } from "react-native";
 import axios from "axios";
