@@ -1,20 +1,19 @@
 import React, { useState, useEffect } from "react";
 import {
   View,
-  SafeAreaView,
   Text,
   StyleSheet,
   Image,
   FlatList,
-  Platform,
+  TextInput,
 } from "react-native";
 // import { ActivityIndicator } from "react-native";
 import axios from "axios";
-import Constants from "expo-constants";
+
 import { useWindowDimensions } from "react-native";
 import { useDebounce } from "use-debounce";
 
-import Header from "../components/Header";
+// import Header from "../components/Header";
 import renderPlatforms from "../components/Platforms";
 import FilterModal from "../components/FilterModal";
 
@@ -24,7 +23,7 @@ export default function GamesScreen() {
   const [page, setPage] = useState(1);
   const [filterModalVisible, setFilterModalVisible] = useState(false);
   const [gameSearch, setGameSearch] = useState("");
-  const [debouncedGameSearch] = useDebounce(gameSearch, 300); // debounce for 500ms
+  const [debouncedGameSearch] = useDebounce(gameSearch, 300);
 
   const { height, width } = useWindowDimensions();
 
@@ -59,17 +58,20 @@ export default function GamesScreen() {
   };
 
   return (
-    <SafeAreaView
-      style={{
-        marginTop: Platform.OS === "android" ? Constants.statusBarHeight : 0,
-      }}
-    >
-      <Header onSearch={setGameSearch} onFilterPress={handleFilterPress} />
+    <View>
+      <View style={styles.searchBarContainer}>
+        <TextInput
+          style={styles.searchBarInput}
+          onChangeText={setGameSearch}
+          placeholder="  Search games"
+          placeholderTextColor="#999"
+        />
+      </View>
       <FlatList
         data={games}
         keyExtractor={(item) => String(item.id)}
         contentContainerStyle={styles.flatListContainer}
-        onEndReachedThreshold={0.5}
+        onEndReachedThreshold={0.2}
         onEndReached={handleEndReached}
         // windowSize={5}
         renderItem={({ item }) => (
@@ -92,14 +94,26 @@ export default function GamesScreen() {
         )}
       />
       <FilterModal visible={filterModalVisible} onClose={handleFilterClose} />
-    </SafeAreaView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  searchBarContainer: {
+    paddingVertical: 10,
+    backgroundColor: "black",
+    alignItems: "center",
+  },
+  searchBarInput: {
+    color: "#FFF",
+    backgroundColor: "#333",
+    borderRadius: 5,
+    height: 30,
+    width: "70%",
+  },
   flatListContainer: {
-    paddingVertical: 20,
-    backgroundColor: "#111",
+    paddingVertical: 5,
+    backgroundColor: "#000",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -109,7 +123,7 @@ const styles = StyleSheet.create({
     height: "auto", // add this line to adjust the card height based on its content
     marginBottom: 20,
     borderRadius: 10,
-    shadowColor: "#000",
+    shadowColor: "#222",
     shadowOffset: {
       width: 0,
       height: 2,
@@ -148,11 +162,11 @@ const styles = StyleSheet.create({
   },
   filterModalContainer: {
     flex: 1,
-    backgroundColor: "#111",
+    backgroundColor: "#000",
     padding: 20,
   },
   filterInput: {
-    backgroundColor: "#222",
+    backgroundColor: "#111",
     borderRadius: 5,
     paddingHorizontal: 10,
     paddingVertical: 5,

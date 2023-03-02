@@ -6,6 +6,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import FavoritesScreen from "./containers/FavoritesScreen";
 import ProfileScreen from "./containers/ProfileScreen";
 import HomeTabNavigator from "./Navigation/HomeTabNavigator";
+import Header from "./components/Header";
+import { styleProps } from "react-native-web/dist/cjs/modules/forwardedProps";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -17,15 +19,14 @@ const mainNavOptions = {
 
 // Options for the tab navigator
 const tabNavOptions = {
-  tabBarActiveTintColor: "red",
+  tabBarActiveTintColor: "white",
   tabBarInactiveTintColor: "#444",
   tabBarActiveBackgroundColor: "#111",
   tabBarInactiveBackgroundColor: "#111",
 };
 
 const homeTabOptions = {
-  tabBarLabel: "Home",
-  headerShown: false,
+  header: () => <Header />,
 };
 
 export default function App() {
@@ -43,14 +44,12 @@ export default function App() {
                 component={HomeTabNavigator}
                 options={homeTabOptions}
               />
-
               {/* Collection tab */}
               <Tab.Screen
                 name="Collection"
                 component={FavoritesScreen}
                 options={{ headerShown: false }}
               />
-
               {/* Profil tab */}
               <Tab.Screen
                 name="Profil"

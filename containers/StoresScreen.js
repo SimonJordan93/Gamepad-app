@@ -18,29 +18,13 @@ import Constants from "expo-constants";
 import { useWindowDimensions } from "react-native";
 import { useDebounce } from "use-debounce";
 
-import Header from "../components/Header";
-
-import FilterModal from "../components/FilterModal";
 const StoresScreen = () => {
-  const [filterModalVisible, setFilterModalVisible] = useState(false);
-
-  const handleFilterPress = () => {
-    setFilterModalVisible(true);
-  };
-
-  const handleFilterClose = () => {
-    setFilterModalVisible(false);
-  };
   return (
-    <SafeAreaView
+    <View
       style={{
         marginTop: Platform.OS === "android" ? Constants.statusBarHeight : 0,
       }}
-    >
-      <Header onFilterPress={handleFilterPress} />
-
-      <FilterModal visible={filterModalVisible} onClose={handleFilterClose} />
-    </SafeAreaView>
+    ></View>
   );
 };
 

@@ -1,140 +1,162 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
   StyleSheet,
   Image,
   TouchableOpacity,
-  TextInput,
+  SafeAreaView,
 } from "react-native";
-
+import Constants from "expo-constants";
 import { useNavigation, useRoute } from "@react-navigation/native";
 
-export default function Header({ onSearch, onFilterPress }) {
+export default function Header() {
+  const [isActive, setIsActive] = useState("Games");
+
   const navigation = useNavigation();
   const route = useRoute();
 
   const handleBrowsePress = (screenName) => {
-    navigation.navigate(screenName);
+    navigation.navigate(`${screenName}${"StackNavigator"}`);
+    setIsActive(screenName);
   };
 
   return (
-    <View style={styles.headerContainer}>
-      <View style={styles.headerBar}>
-        <View style={styles.logoContainer}>
-          <Image
-            source={require("../assets/adaptive-icon.png")}
-            style={styles.logo}
-          />
-        </View>
-        {route.name === "Games" ? (
-          <View style={styles.searchBarContainer}>
-            <TextInput
-              style={styles.searchBarInput}
-              onChangeText={onSearch}
-              placeholder="Search games"
-              placeholderTextColor="#999"
+    <SafeAreaView
+      style={{
+        marginTop: Platform.OS === "android" ? Constants.statusBarHeight : 0,
+      }}
+    >
+      <View style={styles.headerContainer}>
+        <View style={styles.headerBar}>
+          <TouchableOpacity style={styles.logSignButton}>
+            <Text style={styles.logSignButtonText}>Sign up</Text>
+          </TouchableOpacity>
+          <View style={styles.logoContainer}>
+            <Image
+              source={require("../assets/img/rawg-logo.png")}
+              style={styles.logo}
             />
           </View>
-        ) : (
-          <View style={styles.searchBarContainer}>
-            <Text style={styles.searchViewText}>GAMEPAD</Text>
-          </View>
-        )}
-        <TouchableOpacity style={styles.loginButton}>
-          <Text style={styles.loginButtonText}>Login</Text>
-        </TouchableOpacity>
+          <TouchableOpacity style={styles.logSignButton}>
+            <Text style={styles.logSignButtonText}>Login</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.browseButtons}>
+          {"Games" === isActive ? (
+            <TouchableOpacity
+              style={[styles.browseBtn, styles.activeBrowseBtn]}
+              activeOpacity={0.6}
+              onPress={() => handleBrowsePress("Games")}
+            >
+              <Text style={styles.browseBtnTitle}>Games</Text>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              style={styles.browseBtn}
+              activeOpacity={0.6}
+              onPress={() => handleBrowsePress("Games")}
+            >
+              <Text style={styles.browseBtnTitle}>Games</Text>
+            </TouchableOpacity>
+          )}
+          {"Platforms" === isActive ? (
+            <TouchableOpacity
+              style={[styles.browseBtn, styles.activeBrowseBtn]}
+              activeOpacity={0.6}
+              onPress={() => handleBrowsePress("Platforms")}
+            >
+              <Text style={styles.browseBtnTitle}>Platforms</Text>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              style={styles.browseBtn}
+              activeOpacity={0.6}
+              onPress={() => handleBrowsePress("Platforms")}
+            >
+              <Text style={styles.browseBtnTitle}>Platforms</Text>
+            </TouchableOpacity>
+          )}
+          {"Genres" === isActive ? (
+            <TouchableOpacity
+              style={[styles.browseBtn, styles.activeBrowseBtn]}
+              activeOpacity={0.6}
+              onPress={() => handleBrowsePress("Genres")}
+            >
+              <Text style={styles.browseBtnTitle}>Genres</Text>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              style={styles.browseBtn}
+              activeOpacity={0.6}
+              onPress={() => handleBrowsePress("Genres")}
+            >
+              <Text style={styles.browseBtnTitle}>Genres</Text>
+            </TouchableOpacity>
+          )}
+          {"Stores" === isActive ? (
+            <TouchableOpacity
+              style={[styles.browseBtn, styles.activeBrowseBtn]}
+              activeOpacity={0.6}
+              onPress={() => handleBrowsePress("Stores")}
+            >
+              <Text style={styles.browseBtnTitle}>Stores</Text>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              style={styles.browseBtn}
+              activeOpacity={0.6}
+              onPress={() => handleBrowsePress("Stores")}
+            >
+              <Text style={styles.browseBtnTitle}>Stores</Text>
+            </TouchableOpacity>
+          )}
+        </View>
+        {/* {route.name === "Games" && (
+          <TouchableOpacity
+            activeOpacity={0.5}
+            style={styles.filterButton}
+            onPress={onFilterPress}
+          >
+            <Text style={styles.filterButtonText}>Refine Search</Text>
+          </TouchableOpacity>
+        )} */}
       </View>
-      <View style={styles.browseButtons}>
-        <TouchableOpacity
-          style={styles.browseBtn}
-          activeOpacity={0.6}
-          onPress={() => handleBrowsePress("Games")}
-        >
-          <Text style={styles.browseBtnTitle}>Games</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.browseBtn}
-          activeOpacity={0.6}
-          onPress={() => handleBrowsePress("Platforms")}
-        >
-          <Text style={styles.browseBtnTitle}>Platforms</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.browseBtn}
-          activeOpacity={0.6}
-          onPress={() => handleBrowsePress("Genres")}
-        >
-          <Text style={styles.browseBtnTitle}>Genres</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.browseBtn}
-          activeOpacity={0.6}
-          onPress={() => handleBrowsePress("Stores")}
-        >
-          <Text style={styles.browseBtnTitle}>Stores</Text>
-        </TouchableOpacity>
-      </View>
-      {route.name === "Games" && (
-        <TouchableOpacity
-          activeOpacity={0.5}
-          style={styles.filterButton}
-          onPress={onFilterPress}
-        >
-          <Text style={styles.filterButtonText}>Refine Search</Text>
-        </TouchableOpacity>
-      )}
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   headerContainer: {
-    backgroundColor: "#111",
+    backgroundColor: "#000",
   },
   headerBar: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     paddingHorizontal: 10,
-    paddingVertical: 10,
+    paddingTop: 5,
   },
   logoContainer: {
     alignItems: "center",
   },
   logo: {
-    width: 40,
-    height: 40,
-    resizeMode: "contain",
+    width: 200,
+    height: 70,
+    resizeMode: "stretch",
   },
-  searchBarContainer: {
-    flex: 1,
-    backgroundColor: "#222",
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
+  logSignButton: {
     marginHorizontal: 5,
-  },
-  searchBarInput: {
-    color: "#ccc",
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  searchViewText: {
-    color: "#222",
-    fontSize: 20,
-    fontWeight: "bold",
-    alignSelf: "center",
-  },
-  loginButton: {
-    paddingHorizontal: 10,
+    paddingHorizontal: 7,
     paddingVertical: 5,
-    backgroundColor: "red",
+    backgroundColor: "black",
+    borderColor: "white",
+    borderWidth: 2,
     borderRadius: 5,
   },
-  loginButtonText: {
-    color: "#fff",
-    fontSize: 16,
+  logSignButtonText: {
+    color: "#FFF",
+    fontSize: 14,
     fontWeight: "bold",
   },
   browseButtons: {
@@ -149,11 +171,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   activeBrowseBtn: {
-    borderBottomColor: "red",
+    borderBottomColor: "white",
     borderBottomWidth: 2,
   },
   browseBtnTitle: {
-    color: "red",
+    color: "white",
     fontWeight: "bold",
   },
   filterButton: {
@@ -161,5 +183,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#111",
   },
-  filterButtonText: { color: "red", fontSize: 16, fontWeight: "bold" },
+  filterButtonText: { color: "white", fontSize: 16, fontWeight: "bold" },
 });

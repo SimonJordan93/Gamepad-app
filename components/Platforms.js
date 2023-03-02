@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, StyleSheet, Image } from "react-native";
 
 const renderPlatforms = (item) => {
   const supportedPlatforms = item.parent_platforms;
@@ -12,7 +12,7 @@ const renderPlatforms = (item) => {
           return (
             <Image
               key={platformId}
-              source={require("../assets/adaptive-icon.png")}
+              source={require("../assets/img/rawg-logo.png")}
               style={styles.platformLogos}
             />
           );
@@ -21,7 +21,7 @@ const renderPlatforms = (item) => {
           return (
             <Image
               key={platformId}
-              source={require("../assets/adaptive-icon.png")}
+              source={require("../assets/img/rawg-logo.png")}
               style={styles.platformLogos}
             />
           );
@@ -30,7 +30,7 @@ const renderPlatforms = (item) => {
           return (
             <Image
               key={platformId}
-              source={require("../assets/adaptive-icon.png")}
+              source={require("../assets/img/rawg-logo.png")}
               style={styles.platformLogos}
             />
           );
@@ -39,7 +39,7 @@ const renderPlatforms = (item) => {
           return (
             <Image
               key={platformId}
-              source={require("../assets/adaptive-icon.png")}
+              source={require("../assets/img/rawg-logo.png")}
               style={styles.platformLogos}
             />
           );
@@ -48,7 +48,7 @@ const renderPlatforms = (item) => {
           return (
             <Image
               key={platformId}
-              source={require("../assets/adaptive-icon.png")}
+              source={require("../assets/img/rawg-logo.png")}
               style={styles.platformLogos}
             />
           );
@@ -57,7 +57,7 @@ const renderPlatforms = (item) => {
           return (
             <Image
               key={platformId}
-              source={require("../assets/adaptive-icon.png")}
+              source={require("../assets/img/rawg-logo.png")}
               style={styles.platformLogos}
             />
           );
@@ -66,7 +66,7 @@ const renderPlatforms = (item) => {
           return (
             <Image
               key={platformId}
-              source={require("../assets/adaptive-icon.png")}
+              source={require("../assets/img/rawg-logo.png")}
               style={styles.platformLogos}
             />
           );
@@ -75,7 +75,7 @@ const renderPlatforms = (item) => {
           return (
             <Image
               key={platformId}
-              source={require("../assets/adaptive-icon.png")}
+              source={require("../assets/img/rawg-logo.png")}
               style={styles.platformLogos}
             />
           );
@@ -84,7 +84,7 @@ const renderPlatforms = (item) => {
           return (
             <Image
               key={platformId}
-              source={require("../assets/adaptive-icon.png")}
+              source={require("../assets/img/rawg-logo.png")}
               style={styles.platformLogos}
             />
           );
@@ -93,7 +93,7 @@ const renderPlatforms = (item) => {
           return (
             <Image
               key={platformId}
-              source={require("../assets/adaptive-icon.png")}
+              source={require("../assets/img/rawg-logo.png")}
               style={styles.platformLogos}
             />
           );
@@ -102,7 +102,7 @@ const renderPlatforms = (item) => {
           return (
             <Image
               key={platformId}
-              source={require("../assets/adaptive-icon.png")}
+              source={require("../assets/img/rawg-logo.png")}
               style={styles.platformLogos}
             />
           );
@@ -111,7 +111,7 @@ const renderPlatforms = (item) => {
           return (
             <Image
               key={platformId}
-              source={require("../assets/adaptive-icon.png")}
+              source={require("../assets/img/rawg-logo.png")}
               style={styles.platformLogos}
             />
           );
@@ -120,7 +120,7 @@ const renderPlatforms = (item) => {
           return (
             <Image
               key={platformId}
-              source={require("../assets/adaptive-icon.png")}
+              source={require("../assets/img/rawg-logo.png")}
               style={styles.platformLogos}
             />
           );
@@ -129,7 +129,7 @@ const renderPlatforms = (item) => {
           return (
             <Image
               key={platformId}
-              source={require("../assets/adaptive-icon.png")}
+              source={require("../assets/img/rawg-logo.png")}
               style={styles.platformLogos}
             />
           );
