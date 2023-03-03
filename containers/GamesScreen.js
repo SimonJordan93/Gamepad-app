@@ -52,7 +52,6 @@ export default function GamesScreen() {
       return () => {
         alert(" Games was unfocused");
         fetchGames;
-        // setGames;
       };
     }, [page, debouncedGameSearch])
   );

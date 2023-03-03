@@ -26,7 +26,7 @@ export default function PlatformsScreen() {
             `https://api.rawg.io/api/platforms?key=b01f1892725446428389154406012e19`
           );
 
-          setPlatforms(resPlatforms.data.results);
+          setPlatforms(resPlatforms.data);
           console.log(resPlatforms.data);
         } catch (error) {
           console.log(error);
@@ -44,19 +44,22 @@ export default function PlatformsScreen() {
 
   return (
     <View>
-      <FlatList
+      {/* <FlatList
         data={platforms}
         keyExtractor={(item) => String(item.id)}
         contentContainerStyle={styles.flatListContainer}
-        renderItem={({ item }) => (
-          <View style={styles.card}>
-            <Image
-              source={{ uri: item.background_image }}
-              style={styles.image}
-            />
-          </View>
-        )}
-      />
+        renderItem={({ item }) => {
+          console.log(item);
+          return (
+            <View style={styles.card}>
+              <Image
+                source={{ uri: item.background_image }}
+                style={styles.image}
+              />
+            </View>
+          );
+        }}
+      /> */}
     </View>
   );
 }
