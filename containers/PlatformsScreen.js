@@ -4,30 +4,32 @@ import {
   Text,
   StyleSheet,
   Image,
+  ImageBackground,
   FlatList,
   TouchableOpacity,
 } from "react-native";
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
 import axios from "axios";
 
 // import { useWindowDimensions } from "react-native";
 
 export default function PlatformsScreen() {
+  const navigation = useNavigation();
   const [platforms, setPlatforms] = useState([]);
   // const { height, width } = useWindowDimensions();
 
   useFocusEffect(
     React.useCallback(() => {
-      alert("Platforms was focused");
+      // alert("Platforms was focused");
       const fetchPlatforms = async () => {
         try {
           const resPlatforms = await axios.get(
             `https://api.rawg.io/api/platforms?key=b01f1892725446428389154406012e19`
           );
 
-          setPlatforms(resPlatforms.data);
-          console.log(resPlatforms.data);
+          setPlatforms(resPlatforms.data.results);
+          // console.log(resPlatforms.data.results);
         } catch (error) {
           console.log(error);
         }
@@ -35,38 +37,48 @@ export default function PlatformsScreen() {
       fetchPlatforms();
 
       return () => {
-        alert("Platforms was unfocused");
-        // Do something when the screen is unfocused
-        // Useful for cleanup functions
+        // alert("Platforms was unfocused");
+        fetchPlatforms;
       };
     }, [])
   );
 
   return (
     <View>
-      {/* <FlatList
+      <FlatList
         data={platforms}
         keyExtractor={(item) => String(item.id)}
         contentContainerStyle={styles.flatListContainer}
         renderItem={({ item }) => {
-          console.log(item);
+          // console.log(item);
           return (
             <View style={styles.card}>
-              <Image
-                source={{ uri: item.background_image }}
+              <ImageBackground
+                imageStyle={{ borderRadius: 10 }}
+                source={{ uri: item.image_background }}
                 style={styles.image}
-              />
+              >
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate("FilteredPlatformsGamesScreen", {
+                      platformId: item.id,
+                    })
+                  }
+                >
+                  <Text style={styles.platformsTitle}>{item.name}</Text>
+                </TouchableOpacity>
+              </ImageBackground>
             </View>
           );
         }}
-      /> */}
+      />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   flatListContainer: {
-    paddingBottom: 50,
+    paddingVertical: 30,
     backgroundColor: "#000",
     alignItems: "center",
     justifyContent: "center",
@@ -74,21 +86,28 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: "#222",
     width: "90%",
-    height: "auto", // add this line to adjust the card height based on its content
+    height: "auto",
     marginBottom: 20,
     borderRadius: 10,
-    shadowColor: "#222",
+    shadowColor: "#666",
     shadowOffset: {
-      width: 0,
-      height: 2,
+      width: 5,
+      height: 5,
     },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
+    shadowOpacity: 0.8,
+    shadowRadius: 3,
+    elevation: 10,
   },
   image: {
+    justifyContent: "center",
+    alignItems: "center",
     flex: 1,
     aspectRatio: 16 / 9,
-    borderRadius: 10,
+  },
+  platformsTitle: {
+    color: "white",
+    fontSize: 50,
+    fontWeight: "bold",
+    textDecorationLine: "underline",
   },
 });

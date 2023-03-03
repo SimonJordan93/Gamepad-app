@@ -4,33 +4,45 @@ import {
   Text,
   StyleSheet,
   Image,
+  ImageBackground,
   FlatList,
   TouchableOpacity,
 } from "react-native";
 
 import axios from "axios";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
 // import { useWindowDimensions } from "react-native";
 
 export default function StoresScreen() {
+  const navigation = useNavigation();
   const [stores, setStores] = useState([]);
 
   // const { height, width } = useWindowDimensions();
 
-  useEffect(() => {
-    const fetchStores = async () => {
-      try {
-        const response = await axios.get(
-          `https://api.rawg.io/api/games?key=b01f1892725446428389154406012e19`
-        );
+  useFocusEffect(
+    React.useCallback(() => {
+      // alert("Platforms was focused");
+      const fetchStores = async () => {
+        try {
+          const resStores = await axios.get(
+            `https://api.rawg.io/api/stores?key=b01f1892725446428389154406012e19`
+          );
 
-        setStores(response.data.results);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchStores();
-  }, []);
+          setStores(resStores.data.results);
+          // console.log(resPlatforms.data.results);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      fetchStores();
+
+      return () => {
+        // alert("Platforms was unfocused");
+        fetchStores;
+      };
+    }, [])
+  );
 
   return (
     <View>
@@ -40,10 +52,21 @@ export default function StoresScreen() {
         contentContainerStyle={styles.flatListContainer}
         renderItem={({ item }) => (
           <View style={styles.card}>
-            <Image
-              source={{ uri: item.background_image }}
+            <ImageBackground
+              imageStyle={{ borderRadius: 10 }}
+              source={{ uri: item.image_background }}
               style={styles.image}
-            />
+            >
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate("FilteredStoresGamesScreen", {
+                    storeId: item.id,
+                  })
+                }
+              >
+                <Text style={styles.storesTitle}>{item.name}</Text>
+              </TouchableOpacity>
+            </ImageBackground>
           </View>
         )}
       />
@@ -53,7 +76,7 @@ export default function StoresScreen() {
 
 const styles = StyleSheet.create({
   flatListContainer: {
-    paddingBottom: 50,
+    paddingVertical: 30,
     backgroundColor: "#000",
     alignItems: "center",
     justifyContent: "center",
@@ -74,8 +97,15 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   image: {
+    justifyContent: "center",
+    alignItems: "center",
     flex: 1,
     aspectRatio: 16 / 9,
-    borderRadius: 10,
+  },
+  storesTitle: {
+    color: "white",
+    fontSize: 50,
+    fontWeight: "bold",
+    textDecorationLine: "underline",
   },
 });

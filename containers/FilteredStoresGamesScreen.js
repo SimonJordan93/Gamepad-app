@@ -18,7 +18,7 @@ import { useDebounce } from "use-debounce";
 import renderPlatforms from "../components/Platforms";
 import FilterModal from "../components/FilterModal";
 
-export default function GamesScreen() {
+export default function FilterStoresGamesScreen({ route }) {
   // const navigation = useNavigation();
   const [games, setGames] = useState([]);
   const [page, setPage] = useState(1);
@@ -35,7 +35,7 @@ export default function GamesScreen() {
       const fetchGames = async () => {
         try {
           const resGames = await axios.get(
-            `https://api.rawg.io/api/games?key=b01f1892725446428389154406012e19&search=${debouncedGameSearch}&page=${page}`
+            `https://api.rawg.io/api/games?key=b01f1892725446428389154406012e19&stores=${route.params.storeId}&search=${debouncedGameSearch}&page=${page}`
           );
           if (page === 1) {
             setGames(resGames.data.results);
