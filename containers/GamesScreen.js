@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   View,
   Text,
@@ -6,11 +6,13 @@ import {
   Image,
   FlatList,
   TextInput,
+  TouchableOpacity,
+  useWindowDimensions,
 } from "react-native";
-// import { ActivityIndicator } from "react-native";
-import axios from "axios";
 
-import { useWindowDimensions } from "react-native";
+import axios from "axios";
+import { useFocusEffect } from "@react-navigation/native";
+
 import { useDebounce } from "use-debounce";
 
 // import Header from "../components/Header";
@@ -18,32 +20,42 @@ import renderPlatforms from "../components/Platforms";
 import FilterModal from "../components/FilterModal";
 
 export default function GamesScreen() {
-  // const [isLoading, setIsLoading] = useState(true);
+  // const navigation = useNavigation();
   const [games, setGames] = useState([]);
   const [page, setPage] = useState(1);
   const [filterModalVisible, setFilterModalVisible] = useState(false);
   const [gameSearch, setGameSearch] = useState("");
   const [debouncedGameSearch] = useDebounce(gameSearch, 300);
+  const flatListRef = useRef(null);
 
   const { height, width } = useWindowDimensions();
 
-  useEffect(() => {
-    const fetchGames = async () => {
-      try {
-        const response = await axios.get(
-          `https://api.rawg.io/api/games?key=b01f1892725446428389154406012e19&search=${debouncedGameSearch}&page=${page}`
-        );
-        if (page === 1) {
-          setGames(response.data.results);
-        } else {
-          setGames((prevGames) => [...prevGames, ...response.data.results]);
+  useFocusEffect(
+    React.useCallback(() => {
+      alert(" Games was focused");
+      const fetchGames = async () => {
+        try {
+          const resGames = await axios.get(
+            `https://api.rawg.io/api/games?key=b01f1892725446428389154406012e19&search=${debouncedGameSearch}&page=${page}`
+          );
+          if (page === 1) {
+            setGames(resGames.data.results);
+          } else {
+            setGames((prevGames) => [...prevGames, ...resGames.data.results]);
+          }
+        } catch (error) {
+          console.log(error);
         }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchGames();
-  }, [page, debouncedGameSearch]);
+      };
+      fetchGames();
+
+      return () => {
+        alert(" Games was unfocused");
+        fetchGames;
+        // setGames;
+      };
+    }, [page, debouncedGameSearch])
+  );
 
   const handleEndReached = () => {
     setPage((prevPage) => prevPage + 1);
@@ -57,42 +69,66 @@ export default function GamesScreen() {
     setFilterModalVisible(false);
   };
 
+  const handleTextChange = (text) => {
+    setGameSearch(text);
+    setPage(1);
+    flatListRef.current.scrollToOffset({ offset: 0, animated: false });
+  };
+
   return (
     <View>
       <View style={styles.searchBarContainer}>
         <TextInput
           style={styles.searchBarInput}
-          onChangeText={setGameSearch}
+          onChangeText={handleTextChange}
+          value={gameSearch}
           placeholder="  Search games"
           placeholderTextColor="#999"
         />
       </View>
-      <FlatList
-        data={games}
-        keyExtractor={(item) => String(item.id)}
-        contentContainerStyle={styles.flatListContainer}
-        onEndReachedThreshold={0.2}
-        onEndReached={handleEndReached}
-        // windowSize={5}
-        renderItem={({ item }) => (
-          <View style={styles.card}>
-            <Image
-              source={{ uri: item.background_image }}
-              style={styles.image}
-            />
-            {renderPlatforms(item)}
-            <View style={styles.cardContent}>
-              <Text style={styles.title}>
-                {item.name}{" "}
-                {item.rating > 4 ? "🎯" : item.rating > 3 ? "👍" : ""}
-              </Text>
-              <View style={styles.metacriticBox}>
-                <Text style={styles.metacriticScore}>{item.metacritic}</Text>
+      {games ? (
+        <FlatList
+          ref={flatListRef}
+          data={games}
+          keyExtractor={(item) => String(item.id)}
+          contentContainerStyle={styles.flatListContainer}
+          onEndReachedThreshold={0.5}
+          onEndReached={handleEndReached}
+          renderItem={({ item }) => (
+            <View style={styles.card}>
+              <Image
+                source={{ uri: item.background_image }}
+                style={styles.image}
+              />
+
+              {renderPlatforms(item)}
+              <View style={styles.cardContent}>
+                <Text style={styles.title}>
+                  {item.name}{" "}
+                  {item.rating > 4 ? "🎯" : item.rating > 3 ? "👍" : ""}
+                </Text>
+                {item.metacritic && (
+                  <View style={styles.metacriticBox}>
+                    <Text style={styles.metacriticScore}>
+                      {item.metacritic}
+                    </Text>
+                  </View>
+                )}
               </View>
+              <TouchableOpacity style={styles.showGameButton}>
+                <Text style={styles.showGameButtonText}>
+                  See game details →
+                </Text>
+              </TouchableOpacity>
             </View>
-          </View>
-        )}
-      />
+          )}
+        />
+      ) : (
+        <View style={styles.noGames}>
+          <Text style={styles.noGamesText}>No Games Found</Text>
+        </View>
+      )}
+
       <FilterModal visible={filterModalVisible} onClose={handleFilterClose} />
     </View>
   );
@@ -106,13 +142,14 @@ const styles = StyleSheet.create({
   },
   searchBarInput: {
     color: "#FFF",
-    backgroundColor: "#333",
+    borderColor: "#FFF",
+    borderWidth: 2,
     borderRadius: 5,
     height: 30,
     width: "70%",
   },
   flatListContainer: {
-    paddingVertical: 5,
+    paddingBottom: 50,
     backgroundColor: "#000",
     alignItems: "center",
     justifyContent: "center",
@@ -139,7 +176,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 10,
   },
   cardContent: {
-    paddingBottom: 10,
+    paddingVertical: 10,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-around",
@@ -160,6 +197,18 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "bold",
   },
+  showGameButton: {
+    width: "50%",
+    paddingHorizontal: 8,
+    paddingVertical: 5,
+    // backgroundColor: "#FFF",
+    // borderRadius: 5,
+  },
+  showGameButtonText: {
+    color: "#FFF",
+    fontSize: 14,
+    fontWeight: "bold",
+  },
   filterModalContainer: {
     flex: 1,
     backgroundColor: "#000",
@@ -172,5 +221,15 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     marginBottom: 10,
     color: "#fff",
+  },
+  noGames: {
+    // flex: 1,
+    backgroundColor: "black",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  noGamesText: {
+    color: "white",
+    fontSize: 36,
   },
 });

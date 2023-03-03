@@ -30,7 +30,7 @@ export default function Header() {
       <View style={styles.headerContainer}>
         <View style={styles.headerBar}>
           <TouchableOpacity style={styles.logSignButton}>
-            <Text style={styles.logSignButtonText}>Sign up</Text>
+            <Text style={styles.logSignButtonText}>Signup</Text>
           </TouchableOpacity>
           <View style={styles.logoContainer}>
             <Image

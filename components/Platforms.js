@@ -3,6 +3,7 @@ import { View, StyleSheet, Image } from "react-native";
 
 const renderPlatforms = (item) => {
   const supportedPlatforms = item.parent_platforms;
+  if (!supportedPlatforms) return null;
   return (
     <View style={styles.supportedPlatforms}>
       {supportedPlatforms.map((platform) => {
@@ -145,6 +146,7 @@ const styles = StyleSheet.create({
   supportedPlatforms: {
     flexDirection: "row",
     paddingHorizontal: 20,
+    paddingTop: 10,
   },
   platformLogos: {
     height: 20,

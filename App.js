@@ -6,8 +6,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import FavoritesScreen from "./containers/FavoritesScreen";
 import ProfileScreen from "./containers/ProfileScreen";
 import HomeTabNavigator from "./Navigation/HomeTabNavigator";
+
 import Header from "./components/Header";
-import { styleProps } from "react-native-web/dist/cjs/modules/forwardedProps";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -31,7 +31,7 @@ const homeTabOptions = {
 
 export default function App() {
   return (
-    <NavigationContainer>
+    <NavigationContainer style={{ backgroundColor: "black" }}>
       {/* Main navigator */}
       <Stack.Navigator screenOptions={mainNavOptions}>
         <Stack.Screen name="Main">
