@@ -11,7 +11,7 @@ import {
 } from "react-native";
 
 import axios from "axios";
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
 import { useDebounce } from "use-debounce";
 
@@ -19,7 +19,7 @@ import renderPlatforms from "../components/Platforms";
 import FilterModal from "../components/FilterModal";
 
 export default function GamesScreen() {
-  // const navigation = useNavigation();
+  const navigation = useNavigation();
   const [games, setGames] = useState([]);
   const [page, setPage] = useState(1);
   const [filterModalVisible, setFilterModalVisible] = useState(false);
@@ -99,21 +99,23 @@ export default function GamesScreen() {
                 style={styles.image}
               />
 
-              {renderPlatforms(item)}
+              {renderPlatforms({ platformdData: item })}
               <View style={styles.cardContent}>
                 <Text style={styles.title}>
                   {item.name}{" "}
                   {item.rating > 4 ? "🎯" : item.rating > 3 ? "👍" : ""}
                 </Text>
-                {item.metacritic && (
-                  <View style={styles.metacriticBox}>
-                    <Text style={styles.metacriticScore}>
-                      {item.metacritic}
-                    </Text>
-                  </View>
-                )}
+
+                <View style={styles.ratingBox}>
+                  <Text style={styles.ratingScore}>{item.rating}</Text>
+                  <Text style={styles.ratingCount}>+ {item.ratings_count}</Text>
+                </View>
               </View>
-              <TouchableOpacity style={styles.showGameButton}>
+
+              <TouchableOpacity
+                style={styles.showGameButton}
+                onPress={() => navigation.navigate("Game", { id: item.id })}
+              >
                 <Text style={styles.showGameButtonText}>
                   See game details →
                 </Text>
@@ -158,13 +160,13 @@ const styles = StyleSheet.create({
     height: "auto", // add this line to adjust the card height based on its content
     marginBottom: 20,
     borderRadius: 10,
-    shadowColor: "#222",
+    shadowColor: "#333",
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 5,
     },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
+    shadowOpacity: 0.5,
+    shadowRadius: 3,
     elevation: 5,
   },
   image: {
@@ -186,14 +188,19 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#fff",
   },
-  metacriticBox: {
-    backgroundColor: "limegreen",
+  ratingScore: {
+    fontSize: 16,
+    borderWidth: 2,
+    borderColor: "white",
+    borderRadius: 5,
     padding: 5,
-    borderRadius: 3,
-  },
-  metacriticScore: {
     color: "white",
     fontWeight: "bold",
+    marginBottom: 5,
+  },
+  ratingCount: {
+    fontSize: 12,
+    color: "white",
   },
   showGameButton: {
     width: "50%",

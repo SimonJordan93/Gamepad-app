@@ -99,19 +99,17 @@ export default function FilterStoresGamesScreen({ route }) {
                 style={styles.image}
               />
 
-              {renderPlatforms(item)}
+              {renderPlatforms({ platformdData: item })}
               <View style={styles.cardContent}>
                 <Text style={styles.title}>
                   {item.name}{" "}
                   {item.rating > 4 ? "🎯" : item.rating > 3 ? "👍" : ""}
                 </Text>
-                {item.metacritic && (
-                  <View style={styles.metacriticBox}>
-                    <Text style={styles.metacriticScore}>
-                      {item.metacritic}
-                    </Text>
-                  </View>
-                )}
+
+                <View style={styles.ratingBox}>
+                  <Text style={styles.ratingScore}>{item.rating}</Text>
+                  <Text style={styles.ratingCount}>+ {item.ratings_count}</Text>
+                </View>
               </View>
               <TouchableOpacity style={styles.showGameButton}>
                 <Text style={styles.showGameButtonText}>
@@ -186,14 +184,19 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#fff",
   },
-  metacriticBox: {
-    backgroundColor: "limegreen",
+  ratingScore: {
+    fontSize: 16,
+    borderWidth: 2,
+    borderColor: "white",
+    borderRadius: 5,
     padding: 5,
-    borderRadius: 3,
-  },
-  metacriticScore: {
     color: "white",
     fontWeight: "bold",
+    marginBottom: 5,
+  },
+  ratingCount: {
+    fontSize: 12,
+    color: "white",
   },
   showGameButton: {
     width: "50%",

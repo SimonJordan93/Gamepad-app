@@ -9,8 +9,7 @@ import StoresScreen from "../containers/StoresScreen";
 import FilteredPlatformsGamesScreen from "../containers/FilteredPlatformsGamesScreen";
 import FilteredGenresGamesScreen from "../containers/FilteredGenresGamesScreen";
 import FilteredStoresGamesScreen from "../containers/FilteredStoresGamesScreen";
-// import Screen1 from "../containers/Screen1";
-// import Screen2 from "../containers/Screen2";
+import GameScreen from "../containers/GameScreen";
 
 const Stack = createNativeStackNavigator();
 const GamesStack = createNativeStackNavigator();
@@ -20,11 +19,12 @@ const StoresStack = createNativeStackNavigator();
 
 const headerStyle = {
   backgroundColor: "black",
-  height: 40, // set the height to 60 pixels
+  height: 10,
 };
 
 const headerTitleStyle = {
   color: "white",
+  fontSize: 12,
 };
 
 const GamesStackNavigator = () => (
@@ -36,8 +36,11 @@ const GamesStackNavigator = () => (
     }}
   >
     <GamesStack.Screen name="Games" component={GamesScreen} />
-    {/* <GamesStack.Screen name="GamesScreen1" component={Screen1} />
-    <GamesStack.Screen name="GamesScreen2" component={Screen2} /> */}
+    <GamesStack.Screen
+      name="Game"
+      component={GameScreen}
+      options={{ title: "Game" }}
+    />
   </GamesStack.Navigator>
 );
 
@@ -53,9 +56,13 @@ const PlatformsStackNavigator = () => (
     <PlatformsStack.Screen
       name="FilteredPlatformsGamesScreen"
       component={FilteredPlatformsGamesScreen}
+      options={{ title: "Games" }}
     />
-    {/* <PlatformsStack.Screen name="PlatformsScreen1" component={Screen1} />
-    <PlatformsStack.Screen name="PlatformsScreen2" component={Screen2} /> */}
+    <PlatformsStack.Screen
+      name="Game"
+      component={GameScreen}
+      options={{ title: "Game" }}
+    />
   </PlatformsStack.Navigator>
 );
 
@@ -71,9 +78,13 @@ const GenresStackNavigator = () => (
     <GenresStack.Screen
       name="FilteredGenresGamesScreen"
       component={FilteredGenresGamesScreen}
+      options={{ title: "Games" }}
     />
-    {/* <GenresStack.Screen name="GenresScreen1" component={Screen1} />
-    <GenresStack.Screen name="GenresScreen2" component={Screen2} /> */}
+    <GenresStack.Screen
+      name="Game"
+      component={GameScreen}
+      options={{ title: "Game" }}
+    />
   </GenresStack.Navigator>
 );
 
@@ -86,12 +97,16 @@ const StoresStackNavigator = () => (
     }}
   >
     <StoresStack.Screen name="Stores" component={StoresScreen} />
-    <GenresStack.Screen
+    <StoresStack.Screen
       name="FilteredStoresGamesScreen"
       component={FilteredStoresGamesScreen}
+      options={{ title: "Games" }}
     />
-    {/* <StoresStack.Screen name="StoresScreen1" component={Screen1} />
-    <StoresStack.Screen name="StoresScreen2" component={Screen2} /> */}
+    <StoresStack.Screen
+      name="Game"
+      component={GameScreen}
+      options={{ title: "Game" }}
+    />
   </StoresStack.Navigator>
 );
 

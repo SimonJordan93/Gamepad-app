@@ -89,14 +89,14 @@ const styles = StyleSheet.create({
     height: "auto",
     marginBottom: 20,
     borderRadius: 10,
-    shadowColor: "#666",
+    shadowColor: "#333",
     shadowOffset: {
-      width: 5,
+      width: 0,
       height: 5,
     },
-    shadowOpacity: 0.8,
+    shadowOpacity: 0.5,
     shadowRadius: 3,
-    elevation: 10,
+    elevation: 5,
   },
   image: {
     justifyContent: "center",
@@ -108,6 +108,6 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 50,
     fontWeight: "bold",
-    textDecorationLine: "underline",
+    // textDecorationLine: "underline",
   },
 });

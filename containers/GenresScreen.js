@@ -87,13 +87,13 @@ const styles = StyleSheet.create({
     height: "auto", // add this line to adjust the card height based on its content
     marginBottom: 20,
     borderRadius: 10,
-    shadowColor: "#222",
+    shadowColor: "#333",
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 5,
     },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
+    shadowOpacity: 0.5,
+    shadowRadius: 3,
     elevation: 5,
   },
   image: {
@@ -106,6 +106,6 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 50,
     fontWeight: "bold",
-    textDecorationLine: "underline",
+    // textDecorationLine: "underline",
   },
 });

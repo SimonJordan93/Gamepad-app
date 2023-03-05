@@ -1,8 +1,8 @@
 import React from "react";
 import { View, StyleSheet, Image } from "react-native";
 
-const renderPlatforms = (item) => {
-  const supportedPlatforms = item.parent_platforms;
+const renderPlatforms = ({ platformdData }) => {
+  const supportedPlatforms = platformdData.parent_platforms;
   if (!supportedPlatforms) return null;
   return (
     <View style={styles.supportedPlatforms}>
