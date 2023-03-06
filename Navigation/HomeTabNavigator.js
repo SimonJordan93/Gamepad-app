@@ -6,9 +6,11 @@ import GamesScreen from "../containers/GamesScreen";
 import PlatformsScreen from "../containers/PlatformsScreen";
 import GenresScreen from "../containers/GenresScreen";
 import StoresScreen from "../containers/StoresScreen";
+
 import FilteredPlatformsGamesScreen from "../containers/FilteredPlatformsGamesScreen";
 import FilteredGenresGamesScreen from "../containers/FilteredGenresGamesScreen";
 import FilteredStoresGamesScreen from "../containers/FilteredStoresGamesScreen";
+
 import GameScreen from "../containers/GameScreen";
 import PlatformsGameScreen from "../containers/PlatformsGameScreen";
 import GenresGameScreen from "../containers/GenresGameScreen";

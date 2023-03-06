@@ -83,6 +83,12 @@ export default function FilterStoresGamesScreen({ route }) {
           placeholder="  Search games"
           placeholderTextColor="#999"
         />
+        <TouchableOpacity
+          style={styles.filterButton}
+          onPress={handleFilterPress}
+        >
+          <Text style={styles.filterButtonText}>Filters</Text>
+        </TouchableOpacity>
       </View>
       {games ? (
         <FlatList
@@ -139,6 +145,8 @@ const styles = StyleSheet.create({
   searchBarContainer: {
     paddingVertical: 10,
     backgroundColor: "black",
+    flexDirection: "row",
+    justifyContent: "space-around",
     alignItems: "center",
   },
   searchBarInput: {
@@ -215,27 +223,13 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "bold",
   },
-  filterModalContainer: {
-    flex: 1,
-    backgroundColor: "#000",
-    padding: 20,
-  },
-  filterInput: {
-    backgroundColor: "#111",
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    marginBottom: 10,
-    color: "#fff",
-  },
-  noGames: {
-    // flex: 1,
-    backgroundColor: "black",
-    justifyContent: "center",
+  filterButton: {
+    paddingVertical: 10,
     alignItems: "center",
   },
-  noGamesText: {
+  filterButtonText: {
     color: "white",
-    fontSize: 36,
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });
