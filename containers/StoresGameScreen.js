@@ -14,7 +14,7 @@ import { useFocusEffect } from "@react-navigation/native";
 
 import renderPlatforms from "../components/Platforms";
 
-export default function GameScreen({ route }) {
+export default function StoresGameScreen({ route }) {
   const [game, setGame] = useState(null);
   const gameId = route.params.id;
 
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 40,
     fontWeight: "bold",
-    color: "#FFF",
+    color: "#fff",
     shadowColor: "#333",
     shadowOffset: {
       width: 0,
@@ -150,9 +150,6 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   cardHeader: {
-    // flexDirection: "row",
-    // justifyContent: "space-between",
-    // alignItems: "center",
     marginBottom: 10,
   },
   ratingBox: {

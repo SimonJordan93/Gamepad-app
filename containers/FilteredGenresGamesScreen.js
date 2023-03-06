@@ -11,7 +11,7 @@ import {
 } from "react-native";
 
 import axios from "axios";
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
 import { useDebounce } from "use-debounce";
 
@@ -19,7 +19,7 @@ import renderPlatforms from "../components/Platforms";
 import FilterModal from "../components/FilterModal";
 
 export default function FilterGenresGamesScreen({ route }) {
-  // const navigation = useNavigation();
+  const navigation = useNavigation();
   const [games, setGames] = useState([]);
   const [page, setPage] = useState(1);
   const [filterModalVisible, setFilterModalVisible] = useState(false);
@@ -111,7 +111,12 @@ export default function FilterGenresGamesScreen({ route }) {
                   <Text style={styles.ratingCount}>+ {item.ratings_count}</Text>
                 </View>
               </View>
-              <TouchableOpacity style={styles.showGameButton}>
+              <TouchableOpacity
+                style={styles.showGameButton}
+                onPress={() =>
+                  navigation.navigate("GenresGame", { id: item.id })
+                }
+              >
                 <Text style={styles.showGameButtonText}>
                   See game details →
                 </Text>

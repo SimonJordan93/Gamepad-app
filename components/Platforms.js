@@ -152,7 +152,6 @@ const styles = StyleSheet.create({
     height: 20,
     width: 20,
     color: "black",
-
     marginRight: 5,
     marginTop: 2,
   },

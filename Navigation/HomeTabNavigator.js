@@ -10,6 +10,9 @@ import FilteredPlatformsGamesScreen from "../containers/FilteredPlatformsGamesSc
 import FilteredGenresGamesScreen from "../containers/FilteredGenresGamesScreen";
 import FilteredStoresGamesScreen from "../containers/FilteredStoresGamesScreen";
 import GameScreen from "../containers/GameScreen";
+import PlatformsGameScreen from "../containers/PlatformsGameScreen";
+import GenresGameScreen from "../containers/GenresGameScreen";
+import StoresGameScreen from "../containers/StoresGameScreen";
 
 const Stack = createNativeStackNavigator();
 const GamesStack = createNativeStackNavigator();
@@ -35,11 +38,15 @@ const GamesStackNavigator = () => (
       headerTitleStyle,
     }}
   >
-    <GamesStack.Screen name="Games" component={GamesScreen} />
+    <GamesStack.Screen
+      name="Games"
+      component={GamesScreen}
+      options={{ title: "Games" }}
+    />
     <GamesStack.Screen
       name="Game"
       component={GameScreen}
-      options={{ title: "Game" }}
+      options={{ title: "" }}
     />
   </GamesStack.Navigator>
 );
@@ -56,12 +63,12 @@ const PlatformsStackNavigator = () => (
     <PlatformsStack.Screen
       name="FilteredPlatformsGamesScreen"
       component={FilteredPlatformsGamesScreen}
-      options={{ title: "Games" }}
+      options={{ title: "" }}
     />
     <PlatformsStack.Screen
-      name="Game"
-      component={GameScreen}
-      options={{ title: "Game" }}
+      name="PlatformsGame"
+      component={PlatformsGameScreen}
+      options={{ title: "" }}
     />
   </PlatformsStack.Navigator>
 );
@@ -78,12 +85,12 @@ const GenresStackNavigator = () => (
     <GenresStack.Screen
       name="FilteredGenresGamesScreen"
       component={FilteredGenresGamesScreen}
-      options={{ title: "Games" }}
+      options={{ title: "" }}
     />
     <GenresStack.Screen
-      name="Game"
-      component={GameScreen}
-      options={{ title: "Game" }}
+      name="GenresGame"
+      component={GenresGameScreen}
+      options={{ title: "" }}
     />
   </GenresStack.Navigator>
 );
@@ -100,12 +107,12 @@ const StoresStackNavigator = () => (
     <StoresStack.Screen
       name="FilteredStoresGamesScreen"
       component={FilteredStoresGamesScreen}
-      options={{ title: "Games" }}
+      options={{ title: "" }}
     />
     <StoresStack.Screen
-      name="Game"
-      component={GameScreen}
-      options={{ title: "Game" }}
+      name="StoresGame"
+      component={StoresGameScreen}
+      options={{ title: "" }}
     />
   </StoresStack.Navigator>
 );
