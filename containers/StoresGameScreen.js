@@ -8,6 +8,7 @@ import {
   ImageBackground,
   TouchableOpacity,
   Linking,
+  ActivityIndicator,
 } from "react-native";
 import axios from "axios";
 import { useFocusEffect } from "@react-navigation/native";
@@ -41,7 +42,7 @@ export default function StoresGameScreen({ route }) {
   if (!game) {
     return (
       <View style={styles.loadingContainer}>
-        <Text style={styles.loadingText}>Loading...</Text>
+        <ActivityIndicator size="large" color="#FFF" />
       </View>
     );
   }
@@ -128,10 +129,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#000",
     justifyContent: "center",
     alignItems: "center",
-  },
-  loadingText: {
-    color: "#fff",
-    fontSize: 24,
   },
   image: {
     // flex: 1,

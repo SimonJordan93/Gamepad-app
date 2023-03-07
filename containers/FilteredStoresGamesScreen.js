@@ -8,6 +8,7 @@ import {
   TextInput,
   TouchableOpacity,
   useWindowDimensions,
+  ActivityIndicator,
 } from "react-native";
 
 import axios from "axios";
@@ -27,6 +28,7 @@ export default function FilterStoresGamesScreen({ route }) {
   const [debouncedGameSearch] = useDebounce(gameSearch, 300);
   const [sortingOption, setSortingOption] = useState("");
   const flatListRef = useRef(null);
+  const [loading, setLoading] = useState(true);
 
   const { height, width } = useWindowDimensions();
 
@@ -40,8 +42,10 @@ export default function FilterStoresGamesScreen({ route }) {
           );
           if (page === 1) {
             setGames(resGames.data.results);
+            setLoading(false);
           } else {
             setGames((prevGames) => [...prevGames, ...resGames.data.results]);
+            setLoading(false);
           }
         } catch (error) {
           console.log(error);
@@ -116,6 +120,14 @@ export default function FilterStoresGamesScreen({ route }) {
     flatListRef.current.scrollToOffset({ offset: 0, animated: false });
   };
 
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#FFF" />
+      </View>
+    );
+  }
+
   return (
     <View>
       <View style={styles.searchBarContainer}>
@@ -133,51 +145,42 @@ export default function FilterStoresGamesScreen({ route }) {
           <Text style={styles.filterButtonText}>Filters</Text>
         </TouchableOpacity>
       </View>
-      {games ? (
-        <FlatList
-          ref={flatListRef}
-          data={games}
-          keyExtractor={(item) => String(item.id)}
-          contentContainerStyle={styles.flatListContainer}
-          onEndReachedThreshold={0.5}
-          onEndReached={handleEndReached}
-          renderItem={({ item }) => (
-            <View style={styles.card}>
-              <Image
-                source={{ uri: item.background_image }}
-                style={styles.image}
-              />
 
-              {renderPlatforms({ platformdData: item })}
-              <View style={styles.cardContent}>
-                <Text style={styles.title}>
-                  {item.name}{" "}
-                  {item.rating > 4 ? "🎯" : item.rating > 3 ? "👍" : ""}
-                </Text>
+      <FlatList
+        ref={flatListRef}
+        data={games}
+        keyExtractor={(item) => String(item.id)}
+        contentContainerStyle={styles.flatListContainer}
+        onEndReachedThreshold={0.5}
+        onEndReached={handleEndReached}
+        renderItem={({ item }) => (
+          <View style={styles.card}>
+            <Image
+              source={{ uri: item.background_image }}
+              style={styles.image}
+            />
 
-                <View style={styles.ratingBox}>
-                  <Text style={styles.ratingScore}>{item.rating}</Text>
-                  <Text style={styles.ratingCount}>+ {item.ratings_count}</Text>
-                </View>
+            {renderPlatforms({ platformdData: item })}
+            <View style={styles.cardContent}>
+              <Text style={styles.title}>
+                {item.name}{" "}
+                {item.rating > 4 ? "🎯" : item.rating > 3 ? "👍" : ""}
+              </Text>
+
+              <View style={styles.ratingBox}>
+                <Text style={styles.ratingScore}>{item.rating}</Text>
+                <Text style={styles.ratingCount}>+ {item.ratings_count}</Text>
               </View>
-              <TouchableOpacity
-                style={styles.showGameButton}
-                onPress={() =>
-                  navigation.navigate("StoresGame", { id: item.id })
-                }
-              >
-                <Text style={styles.showGameButtonText}>
-                  See game details →
-                </Text>
-              </TouchableOpacity>
             </View>
-          )}
-        />
-      ) : (
-        <View style={styles.noGames}>
-          <Text style={styles.noGamesText}>No Games Found</Text>
-        </View>
-      )}
+            <TouchableOpacity
+              style={styles.showGameButton}
+              onPress={() => navigation.navigate("StoresGame", { id: item.id })}
+            >
+              <Text style={styles.showGameButtonText}>See game details →</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+      />
 
       <FilterModal
         visible={filterModalVisible}
@@ -195,6 +198,12 @@ export default function FilterStoresGamesScreen({ route }) {
 }
 
 const styles = StyleSheet.create({
+  loadingContainer: {
+    flex: 1,
+    backgroundColor: "#000",
+    justifyContent: "center",
+    alignItems: "center",
+  },
   searchBarContainer: {
     paddingVertical: 10,
     backgroundColor: "black",

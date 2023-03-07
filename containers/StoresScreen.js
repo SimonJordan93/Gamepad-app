@@ -7,6 +7,7 @@ import {
   ImageBackground,
   FlatList,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 
 import axios from "axios";
@@ -17,6 +18,7 @@ import { useFocusEffect, useNavigation } from "@react-navigation/native";
 export default function StoresScreen() {
   const navigation = useNavigation();
   const [stores, setStores] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   // const { height, width } = useWindowDimensions();
 
@@ -30,7 +32,7 @@ export default function StoresScreen() {
           );
 
           setStores(resStores.data.results);
-          // console.log(resPlatforms.data.results);
+          setLoading(false);
         } catch (error) {
           console.log(error);
         }
@@ -43,6 +45,14 @@ export default function StoresScreen() {
       };
     }, [])
   );
+
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#FFF" />
+      </View>
+    );
+  }
 
   return (
     <View>
@@ -75,6 +85,12 @@ export default function StoresScreen() {
 }
 
 const styles = StyleSheet.create({
+  loadingContainer: {
+    flex: 1,
+    backgroundColor: "#000",
+    justifyContent: "center",
+    alignItems: "center",
+  },
   flatListContainer: {
     paddingVertical: 30,
     backgroundColor: "#000",
