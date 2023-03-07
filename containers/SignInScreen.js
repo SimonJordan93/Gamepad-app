@@ -7,7 +7,6 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
-  // KeyboardAwareScrollView,
   Alert,
   Image,
 } from "react-native";
@@ -52,6 +51,7 @@ const SignInScreen = ({ setToken }) => {
         <TextInput
           style={styles.input}
           placeholder="Email"
+          placeholderTextColor="#FFF"
           onChangeText={(text) => setEmail(text)}
           autoCapitalize="none"
           keyboardType="email-address"
@@ -59,15 +59,16 @@ const SignInScreen = ({ setToken }) => {
         <TextInput
           style={styles.input}
           placeholder="Password"
+          placeholderTextColor="#FFF"
           onChangeText={(text) => setPassword(text)}
           secureTextEntry={true}
         />
         <TouchableOpacity style={styles.button}>
           <Text style={styles.buttonText}>Sign In</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate("User")}>
+        <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
           <Text style={styles.signInText}>
-            No account? <Text style={styles.signInLink}>Register</Text>
+            No account? <Text style={styles.signInLink}>Sign up</Text>
           </Text>
         </TouchableOpacity>
       </View>
@@ -78,23 +79,18 @@ const SignInScreen = ({ setToken }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: "black",
   },
   logoContainer: {
     alignItems: "center",
     flexGrow: 1,
     justifyContent: "center",
   },
-  logo: {
-    marginTop: 20,
-    marginBottom: 20,
-    height: 100,
-    width: 100,
-  },
   screenTitle: {
+    marginTop: 20,
     fontSize: 25,
     fontWeight: "bold",
-    color: "#666",
+    color: "#FFF",
   },
   formContainer: {
     // backgroundColor: "black",
@@ -104,9 +100,9 @@ const styles = StyleSheet.create({
   },
   input: {
     width: "100%",
-    height: 50,
+    height: 40,
     marginBottom: 20,
-    borderBottomColor: "#ff5a5f",
+    borderBottomColor: "#FFF",
     borderBottomWidth: 1,
     paddingHorizontal: 10,
     borderRadius: 5,
@@ -115,23 +111,24 @@ const styles = StyleSheet.create({
     marginTop: 50,
     width: "50%",
     backgroundColor: "#FFF",
-    borderColor: "#ff5a5f",
+    borderColor: "#FFF",
     borderWidth: 3,
     paddingVertical: 15,
-    borderRadius: 30,
+    borderRadius: 10,
   },
   buttonText: {
+    fontSize: 20,
     textAlign: "center",
-    color: "#666",
+    color: "#000",
     fontWeight: "700",
   },
   signInText: {
     textAlign: "center",
     marginTop: 20,
-    color: "#484848",
+    color: "#FFF",
   },
   signInLink: {
-    color: "#ff5a5f",
+    color: "#FFF",
     fontWeight: "700",
   },
 });
