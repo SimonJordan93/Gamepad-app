@@ -13,7 +13,7 @@ const renderPlatforms = ({ platformdData }) => {
           return (
             <Image
               key={platformId}
-              source={require("../assets/img/rawg-logo.png")}
+              source={require("../assets/img/windows-logo.png")}
               style={styles.platformLogos}
             />
           );
@@ -22,7 +22,7 @@ const renderPlatforms = ({ platformdData }) => {
           return (
             <Image
               key={platformId}
-              source={require("../assets/img/rawg-logo.png")}
+              source={require("../assets/img/playstation-logo.png")}
               style={styles.platformLogos}
             />
           );
@@ -31,7 +31,7 @@ const renderPlatforms = ({ platformdData }) => {
           return (
             <Image
               key={platformId}
-              source={require("../assets/img/rawg-logo.png")}
+              source={require("../assets/img/xbox-logo.png")}
               style={styles.platformLogos}
             />
           );
@@ -40,7 +40,7 @@ const renderPlatforms = ({ platformdData }) => {
           return (
             <Image
               key={platformId}
-              source={require("../assets/img/rawg-logo.png")}
+              source={require("../assets/img/ios-logo.png")}
               style={styles.platformLogos}
             />
           );
@@ -49,7 +49,7 @@ const renderPlatforms = ({ platformdData }) => {
           return (
             <Image
               key={platformId}
-              source={require("../assets/img/rawg-logo.png")}
+              source={require("../assets/img/android-logo.png")}
               style={styles.platformLogos}
             />
           );
@@ -58,7 +58,7 @@ const renderPlatforms = ({ platformdData }) => {
           return (
             <Image
               key={platformId}
-              source={require("../assets/img/rawg-logo.png")}
+              source={require("../assets/img/mac-logo.png")}
               style={styles.platformLogos}
             />
           );
@@ -67,7 +67,7 @@ const renderPlatforms = ({ platformdData }) => {
           return (
             <Image
               key={platformId}
-              source={require("../assets/img/rawg-logo.png")}
+              source={require("../assets/img/linux-logo.png")}
               style={styles.platformLogos}
             />
           );
@@ -76,7 +76,7 @@ const renderPlatforms = ({ platformdData }) => {
           return (
             <Image
               key={platformId}
-              source={require("../assets/img/rawg-logo.png")}
+              source={require("../assets/img/nintendo-logo.png")}
               style={styles.platformLogos}
             />
           );
@@ -85,7 +85,7 @@ const renderPlatforms = ({ platformdData }) => {
           return (
             <Image
               key={platformId}
-              source={require("../assets/img/rawg-logo.png")}
+              source={require("../assets/img/atari-logo.png")}
               style={styles.platformLogos}
             />
           );
@@ -94,7 +94,7 @@ const renderPlatforms = ({ platformdData }) => {
           return (
             <Image
               key={platformId}
-              source={require("../assets/img/rawg-logo.png")}
+              source={require("../assets/img/commodore-logo.png")}
               style={styles.platformLogos}
             />
           );
@@ -103,7 +103,7 @@ const renderPlatforms = ({ platformdData }) => {
           return (
             <Image
               key={platformId}
-              source={require("../assets/img/rawg-logo.png")}
+              source={require("../assets/img/sega-logo.png")}
               style={styles.platformLogos}
             />
           );
@@ -112,7 +112,7 @@ const renderPlatforms = ({ platformdData }) => {
           return (
             <Image
               key={platformId}
-              source={require("../assets/img/rawg-logo.png")}
+              source={require("../assets/img/3DO-logo.png")}
               style={styles.platformLogos}
             />
           );
@@ -121,7 +121,7 @@ const renderPlatforms = ({ platformdData }) => {
           return (
             <Image
               key={platformId}
-              source={require("../assets/img/rawg-logo.png")}
+              source={require("../assets/img/neogeo-logo.png")}
               style={styles.platformLogos}
             />
           );
@@ -130,7 +130,7 @@ const renderPlatforms = ({ platformdData }) => {
           return (
             <Image
               key={platformId}
-              source={require("../assets/img/rawg-logo.png")}
+              source={require("../assets/img/www-logo.png")}
               style={styles.platformLogos}
             />
           );
