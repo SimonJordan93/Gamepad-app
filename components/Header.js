@@ -29,8 +29,13 @@ export default function Header() {
     >
       <View style={styles.headerContainer}>
         <View style={styles.headerBar}>
-          <TouchableOpacity style={styles.logSignButton}>
-            <Text style={styles.logSignButtonText}>Signup</Text>
+          <TouchableOpacity
+            style={styles.logSignButton}
+            onPress={() =>
+              navigation.navigate("UserStackNavigator", { screen: "SignUp" })
+            }
+          >
+            <Text style={styles.logSignButtonText}>Sign up</Text>
           </TouchableOpacity>
           <View style={styles.logoContainer}>
             <Image
@@ -38,8 +43,13 @@ export default function Header() {
               style={styles.logo}
             />
           </View>
-          <TouchableOpacity style={styles.logSignButton}>
-            <Text style={styles.logSignButtonText}>Login</Text>
+          <TouchableOpacity
+            style={styles.logSignButton}
+            onPress={() =>
+              navigation.navigate("UserStackNavigator", { screen: "SignIn" })
+            }
+          >
+            <Text style={styles.logSignButtonText}>Sign in</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.browseButtons}>

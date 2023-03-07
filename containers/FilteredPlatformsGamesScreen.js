@@ -81,42 +81,49 @@ export default function FilterPlatformsGamesScreen({ route }) {
   const handleSortByAToZ = () => {
     setSortingOption("name");
     setFilterModalVisible(false);
+    setPage(1);
     flatListRef.current.scrollToOffset({ offset: 0, animated: false });
   };
 
   const handleSortByZToA = () => {
     setSortingOption("-name");
     setFilterModalVisible(false);
+    setPage(1);
     flatListRef.current.scrollToOffset({ offset: 0, animated: false });
   };
 
   const handleSortByEarliest = () => {
     setSortingOption("released");
     setFilterModalVisible(false);
+    setPage(1);
     flatListRef.current.scrollToOffset({ offset: 0, animated: false });
   };
 
   const handleSortByMostRecent = () => {
     setSortingOption("-released");
     setFilterModalVisible(false);
+    setPage(1);
     flatListRef.current.scrollToOffset({ offset: 0, animated: false });
   };
 
   const handleSortByHighest = () => {
     setSortingOption("-rating");
     setFilterModalVisible(false);
+    setPage(1);
     flatListRef.current.scrollToOffset({ offset: 0, animated: false });
   };
 
   const handleSortByLowest = () => {
     setSortingOption("rating");
     setFilterModalVisible(false);
+    setPage(1);
     flatListRef.current.scrollToOffset({ offset: 0, animated: false });
   };
 
   const handleResetSort = () => {
     setSortingOption("");
     setFilterModalVisible(false);
+    setPage(1);
     flatListRef.current.scrollToOffset({ offset: 0, animated: false });
   };
 

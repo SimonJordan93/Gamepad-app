@@ -18,6 +18,7 @@ export default function FilterModal({
         {/* <Text style={styles.filterTitle}>Filters</Text> */}
         {/* Filter inputs */}
         <Text style={styles.filtersTitle}>Sort by alphabetical order :</Text>
+        {/* Alphabetical Sorting */}
         <View style={styles.filterContainer}>
           <TouchableOpacity style={styles.filtersButton} onPress={onSortByAToZ}>
             <Text style={styles.filtersText}>A to Z</Text>
@@ -26,6 +27,7 @@ export default function FilterModal({
             <Text style={styles.filtersText}>Z to A</Text>
           </TouchableOpacity>
         </View>
+        {/* Reease date Sorting */}
         <Text style={styles.filtersTitle}>Sort by release date :</Text>
         <View style={styles.filterContainer}>
           <TouchableOpacity
@@ -41,6 +43,7 @@ export default function FilterModal({
             <Text style={styles.filtersText}>Most recent</Text>
           </TouchableOpacity>
         </View>
+        {/* Ratings Sorting */}
         <Text style={styles.filtersTitle}>Sort by rating :</Text>
         <View style={styles.filterContainer}>
           <TouchableOpacity

@@ -79,45 +79,52 @@ export default function GamesScreen() {
   };
 
   const handleSortByAToZ = () => {
+    setPage(1);
+    flatListRef.current.scrollToOffset({ offset: 0, animated: false });
     setSortingOption("name");
     setFilterModalVisible(false);
-    flatListRef.current.scrollToOffset({ offset: 0, animated: false });
   };
 
   const handleSortByZToA = () => {
+    setPage(1);
+    flatListRef.current.scrollToOffset({ offset: 0, animated: false });
     setSortingOption("-name");
     setFilterModalVisible(false);
-    flatListRef.current.scrollToOffset({ offset: 0, animated: false });
   };
 
   const handleSortByEarliest = () => {
+    setPage(1);
+    flatListRef.current.scrollToOffset({ offset: 0, animated: false });
     setSortingOption("released");
     setFilterModalVisible(false);
-    flatListRef.current.scrollToOffset({ offset: 0, animated: false });
   };
 
   const handleSortByMostRecent = () => {
+    setPage(1);
+    flatListRef.current.scrollToOffset({ offset: 0, animated: false });
     setSortingOption("-released");
     setFilterModalVisible(false);
-    flatListRef.current.scrollToOffset({ offset: 0, animated: false });
   };
 
   const handleSortByHighest = () => {
+    setPage(1);
+    flatListRef.current.scrollToOffset({ offset: 0, animated: false });
     setSortingOption("-rating");
     setFilterModalVisible(false);
-    flatListRef.current.scrollToOffset({ offset: 0, animated: false });
   };
 
   const handleSortByLowest = () => {
+    setPage(1);
+    flatListRef.current.scrollToOffset({ offset: 0, animated: false });
     setSortingOption("rating");
     setFilterModalVisible(false);
-    flatListRef.current.scrollToOffset({ offset: 0, animated: false });
   };
 
   const handleResetSort = () => {
+    setPage(1);
+    flatListRef.current.scrollToOffset({ offset: 0, animated: false });
     setSortingOption("");
     setFilterModalVisible(false);
-    flatListRef.current.scrollToOffset({ offset: 0, animated: false });
   };
 
   if (loading) {

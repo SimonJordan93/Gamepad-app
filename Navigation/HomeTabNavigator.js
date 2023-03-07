@@ -16,11 +16,15 @@ import PlatformsGameScreen from "../containers/PlatformsGameScreen";
 import GenresGameScreen from "../containers/GenresGameScreen";
 import StoresGameScreen from "../containers/StoresGameScreen";
 
+import SignInScreen from "../containers/SignInScreen";
+import SignUpScreen from "../containers/SignUpScreen";
+
 const Stack = createNativeStackNavigator();
 const GamesStack = createNativeStackNavigator();
 const PlatformsStack = createNativeStackNavigator();
 const GenresStack = createNativeStackNavigator();
 const StoresStack = createNativeStackNavigator();
+const UserStack = createNativeStackNavigator();
 
 const headerStyle = {
   backgroundColor: "black",
@@ -31,6 +35,21 @@ const headerTitleStyle = {
   color: "white",
   fontSize: 12,
 };
+
+const UserStackNavigator = () => (
+  <UserStack.Navigator screenOptions={{ headerShown: false }}>
+    <UserStack.Screen
+      name="SignIn"
+      component={SignInScreen}
+      options={{ title: "Sign in" }}
+    />
+    <UserStack.Screen
+      name="SignUp"
+      component={SignUpScreen}
+      options={{ title: "Sign up" }}
+    />
+  </UserStack.Navigator>
+);
 
 const GamesStackNavigator = () => (
   <GamesStack.Navigator
@@ -134,6 +153,7 @@ const HomeTabNavigator = () => (
       name="StoresStackNavigator"
       component={StoresStackNavigator}
     />
+    <Stack.Screen name="UserStackNavigator" component={UserStackNavigator} />
   </Stack.Navigator>
 );
 
