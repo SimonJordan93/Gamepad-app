@@ -63,40 +63,56 @@ export default function StoresGameScreen({ route }) {
           </View>
         </View>
 
-        <Text style={styles.description}>{game.description_raw}</Text>
+        {game.description_raw && (
+          <Text style={styles.description}>{game.description_raw}</Text>
+        )}
 
-        <View style={styles.metaContainer}>
-          <Text style={styles.metaLabel}>Metacritic Score:</Text>
-          <Text style={styles.metaValue}>{game.metacritic}</Text>
-        </View>
+        {game.metacritic && (
+          <View style={styles.metaContainer}>
+            <Text style={styles.metaLabel}>Metacritic Score:</Text>
+            <Text style={styles.metaValue}>{game.metacritic}</Text>
+          </View>
+        )}
 
-        <View style={styles.metaContainer}>
-          <Text style={styles.metaLabel}>Release Date:</Text>
-          <Text style={styles.metaValue}>{game.released}</Text>
-        </View>
+        {game.released && (
+          <View style={styles.metaContainer}>
+            <Text style={styles.metaLabel}>Release Date:</Text>
+            <Text style={styles.metaValue}>{game.released}</Text>
+          </View>
+        )}
 
-        <View style={styles.metaContainer}>
-          <Text style={styles.metaLabel}>Publishers:</Text>
-          <Text style={styles.metaValue}>{game.publishers[0].name}</Text>
-        </View>
+        {game.publishers &&
+          game.publishers.length > 0 &&
+          game.publishers[0].name && (
+            <View style={styles.metaContainer}>
+              <Text style={styles.metaLabel}>Publishers:</Text>
+              <Text style={styles.metaValue}>{game.publishers[0].name}</Text>
+            </View>
+          )}
 
-        <View style={styles.metaContainer}>
-          <Text style={styles.metaLabel}>Genres:</Text>
-          {game.genres.map((genre) => {
-            return (
-              <Text key={genre.id} style={styles.metaValue}>
-                {genre.name}
+        {game.genres && (
+          <View style={styles.metaContainer}>
+            <Text style={styles.metaLabel}>Genres:</Text>
+            {game.genres.map((genre) => {
+              return (
+                <Text key={genre.id} style={styles.metaValue}>
+                  {genre.name}
+                </Text>
+              );
+            })}
+          </View>
+        )}
+
+        {game.website && (
+          <View style={styles.metaContainer}>
+            <Text style={styles.metaLabel}>Website:</Text>
+            <TouchableOpacity onPress={() => Linking.openURL(game.website)}>
+              <Text style={[styles.metaValue, styles.link]}>
+                {game.website}
               </Text>
-            );
-          })}
-        </View>
-
-        <View style={styles.metaContainer}>
-          <Text style={styles.metaLabel}>Website:</Text>
-          <TouchableOpacity onPress={() => Linking.openURL(game.website)}>
-            <Text style={[styles.metaValue, styles.link]}>{game.website}</Text>
-          </TouchableOpacity>
-        </View>
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
     </ScrollView>
   );

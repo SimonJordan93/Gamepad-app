@@ -25,6 +25,7 @@ export default function FilterGenresGamesScreen({ route }) {
   const [filterModalVisible, setFilterModalVisible] = useState(false);
   const [gameSearch, setGameSearch] = useState("");
   const [debouncedGameSearch] = useDebounce(gameSearch, 300);
+  const [sortingOption, setSortingOption] = useState("");
   const flatListRef = useRef(null);
 
   const { height, width } = useWindowDimensions();
@@ -35,7 +36,7 @@ export default function FilterGenresGamesScreen({ route }) {
       const fetchGames = async () => {
         try {
           const resGames = await axios.get(
-            `https://api.rawg.io/api/games?key=b01f1892725446428389154406012e19&genres=${route.params.genreId}&search=${debouncedGameSearch}&page=${page}`
+            `https://api.rawg.io/api/games?key=b01f1892725446428389154406012e19&genres=${route.params.genreId}&search=${debouncedGameSearch}&page=${page}&ordering=${sortingOption}`
           );
           if (page === 1) {
             setGames(resGames.data.results);
@@ -52,7 +53,7 @@ export default function FilterGenresGamesScreen({ route }) {
         // alert(" Games was unfocused");
         fetchGames;
       };
-    }, [page, debouncedGameSearch])
+    }, [page, debouncedGameSearch, sortingOption])
   );
 
   const handleEndReached = () => {
@@ -70,6 +71,48 @@ export default function FilterGenresGamesScreen({ route }) {
   const handleTextChange = (text) => {
     setGameSearch(text);
     setPage(1);
+    flatListRef.current.scrollToOffset({ offset: 0, animated: false });
+  };
+
+  const handleSortByAToZ = () => {
+    setSortingOption("name");
+    setFilterModalVisible(false);
+    flatListRef.current.scrollToOffset({ offset: 0, animated: false });
+  };
+
+  const handleSortByZToA = () => {
+    setSortingOption("-name");
+    setFilterModalVisible(false);
+    flatListRef.current.scrollToOffset({ offset: 0, animated: false });
+  };
+
+  const handleSortByEarliest = () => {
+    setSortingOption("released");
+    setFilterModalVisible(false);
+    flatListRef.current.scrollToOffset({ offset: 0, animated: false });
+  };
+
+  const handleSortByMostRecent = () => {
+    setSortingOption("-released");
+    setFilterModalVisible(false);
+    flatListRef.current.scrollToOffset({ offset: 0, animated: false });
+  };
+
+  const handleSortByHighest = () => {
+    setSortingOption("-rating");
+    setFilterModalVisible(false);
+    flatListRef.current.scrollToOffset({ offset: 0, animated: false });
+  };
+
+  const handleSortByLowest = () => {
+    setSortingOption("rating");
+    setFilterModalVisible(false);
+    flatListRef.current.scrollToOffset({ offset: 0, animated: false });
+  };
+
+  const handleResetSort = () => {
+    setSortingOption("");
+    setFilterModalVisible(false);
     flatListRef.current.scrollToOffset({ offset: 0, animated: false });
   };
 
@@ -136,7 +179,17 @@ export default function FilterGenresGamesScreen({ route }) {
         </View>
       )}
 
-      <FilterModal visible={filterModalVisible} onClose={handleFilterClose} />
+      <FilterModal
+        visible={filterModalVisible}
+        onClose={handleFilterClose}
+        onSortByAToZ={handleSortByAToZ}
+        onSortByZToA={handleSortByZToA}
+        onSortByEarliest={handleSortByEarliest}
+        onSortByMostRecent={handleSortByMostRecent}
+        onSortByHighest={handleSortByHighest}
+        onSortByLowest={handleSortByLowest}
+        onResetSort={handleResetSort}
+      />
     </View>
   );
 }
