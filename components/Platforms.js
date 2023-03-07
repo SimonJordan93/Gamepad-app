@@ -145,8 +145,8 @@ const renderPlatforms = ({ platformdData }) => {
 const styles = StyleSheet.create({
   supportedPlatforms: {
     flexDirection: "row",
-    paddingHorizontal: 20,
-    paddingTop: 10,
+    paddingHorizontal: 5,
+    paddingVertical: 10,
   },
   platformLogos: {
     height: 20,

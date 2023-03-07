@@ -15,6 +15,7 @@ import axios from "axios";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
 import { useDebounce } from "use-debounce";
+import Swiper from "react-native-swiper";
 
 import renderPlatforms from "../components/Platforms";
 import FilterModal from "../components/FilterModal";
@@ -162,10 +163,24 @@ export default function GamesScreen() {
         onEndReached={handleEndReached}
         renderItem={({ item }) => (
           <View style={styles.card}>
-            <Image
-              source={{ uri: item.background_image }}
-              style={styles.image}
-            />
+            <Swiper
+              style={styles.wrapper}
+              showsButtons={true}
+              nextButton={<Text style={styles.button}>›</Text>}
+              prevButton={<Text style={styles.button}>‹</Text>}
+              dotStyle={styles.dot}
+              activeDotStyle={styles.activeDot}
+            >
+              {item.short_screenshots.map((img) => {
+                return (
+                  <Image
+                    key={img.id}
+                    source={{ uri: img.image }}
+                    style={styles.image}
+                  />
+                );
+              })}
+            </Swiper>
 
             {renderPlatforms({ platformdData: item })}
             <View style={styles.cardContent}>
@@ -236,7 +251,7 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: "#222",
     width: "90%",
-    height: "auto", // add this line to adjust the card height based on its content
+    height: "auto",
     marginBottom: 20,
     borderRadius: 10,
     shadowColor: "#333",
@@ -248,11 +263,32 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
     elevation: 5,
   },
+  wrapper: { height: 200 },
   image: {
-    flex: 1,
     aspectRatio: 16 / 9,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
+  },
+  button: {
+    color: "#fff",
+    fontSize: 24,
+    fontWeight: "bold",
+  },
+  dot: {
+    backgroundColor: "#000",
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    marginLeft: 5,
+    marginRight: 5,
+  },
+  activeDot: {
+    backgroundColor: "#FFF",
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    marginLeft: 5,
+    marginRight: 5,
   },
   cardContent: {
     paddingVertical: 10,
