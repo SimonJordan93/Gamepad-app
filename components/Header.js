@@ -10,7 +10,7 @@ import {
 import Constants from "expo-constants";
 import { useNavigation, useRoute } from "@react-navigation/native";
 
-export default function Header() {
+export default function Header({ userToken, setUserToken }) {
   const [isActive, setIsActive] = useState("Games");
 
   const navigation = useNavigation();
@@ -28,30 +28,51 @@ export default function Header() {
       }}
     >
       <View style={styles.headerContainer}>
-        <View style={styles.headerBar}>
-          <TouchableOpacity
-            style={styles.logSignButton}
-            onPress={() =>
-              navigation.navigate("UserStackNavigator", { screen: "SignUp" })
-            }
-          >
-            <Text style={styles.logSignButtonText}>Sign up</Text>
-          </TouchableOpacity>
-          <View style={styles.logoContainer}>
-            <Image
-              source={require("../assets/img/rawg-logo.png")}
-              style={styles.logo}
-            />
+        {userToken ? (
+          <View style={styles.headerBarIn}>
+            <View style={styles.logoContainer}>
+              <Image
+                source={require("../assets/img/rawg-logo.png")}
+                style={styles.logo}
+              />
+            </View>
+            <TouchableOpacity
+              style={styles.logSignButton}
+              onPress={() => {
+                setUserToken(null);
+                navigation.navigate("GamesStackNavigator", { screen: "Games" });
+              }}
+            >
+              <Text style={styles.logSignButtonText}>Sign out</Text>
+            </TouchableOpacity>
           </View>
-          <TouchableOpacity
-            style={styles.logSignButton}
-            onPress={() =>
-              navigation.navigate("UserStackNavigator", { screen: "SignIn" })
-            }
-          >
-            <Text style={styles.logSignButtonText}>Sign in</Text>
-          </TouchableOpacity>
-        </View>
+        ) : (
+          <View style={styles.headerBar}>
+            <TouchableOpacity
+              style={styles.logSignButton}
+              onPress={() =>
+                navigation.navigate("UserStackNavigator", { screen: "SignUp" })
+              }
+            >
+              <Text style={styles.logSignButtonText}>Sign up</Text>
+            </TouchableOpacity>
+            <View style={styles.logoContainer}>
+              <Image
+                source={require("../assets/img/rawg-logo.png")}
+                style={styles.logo}
+              />
+            </View>
+            <TouchableOpacity
+              style={styles.logSignButton}
+              onPress={() =>
+                navigation.navigate("UserStackNavigator", { screen: "SignIn" })
+              }
+            >
+              <Text style={styles.logSignButtonText}>Sign in</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+
         <View style={styles.browseButtons}>
           {"Games" === isActive ? (
             <TouchableOpacity
@@ -122,15 +143,6 @@ export default function Header() {
             </TouchableOpacity>
           )}
         </View>
-        {/* {route.name === "Games" && (
-          <TouchableOpacity
-            activeOpacity={0.5}
-            style={styles.filterButton}
-            onPress={onFilterPress}
-          >
-            <Text style={styles.filterButtonText}>Refine Search</Text>
-          </TouchableOpacity>
-        )} */}
       </View>
     </SafeAreaView>
   );
@@ -144,6 +156,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+    paddingHorizontal: 10,
+    paddingTop: 5,
+  },
+  headerBarIn: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-end",
     paddingHorizontal: 10,
     paddingTop: 5,
   },
@@ -188,10 +207,4 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "bold",
   },
-  filterButton: {
-    paddingVertical: 10,
-    alignItems: "center",
-    backgroundColor: "#111",
-  },
-  filterButtonText: { color: "white", fontSize: 16, fontWeight: "bold" },
 });

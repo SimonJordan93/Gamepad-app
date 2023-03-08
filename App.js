@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import FavoritesScreen from "./containers/FavoritesScreen";
 import ProfileScreen from "./containers/ProfileScreen";
@@ -25,11 +26,25 @@ const tabNavOptions = {
   tabBarInactiveBackgroundColor: "#111",
 };
 
-const homeTabOptions = {
-  header: () => <Header />,
-};
-
 export default function App() {
+  // User Token
+  const [userToken, setUserToken] = useState(null);
+
+  const setToken = async (token) => {
+    if (token) {
+      await AsyncStorage.setItem("userToken", token);
+      // console.log(token);
+    } else {
+      await AsyncStorage.removeItem("userToken");
+    }
+
+    setUserToken(token);
+  };
+
+  const homeTabOptions = {
+    header: () => <Header userToken={userToken} setUserToken={setUserToken} />,
+  };
+
   return (
     <NavigationContainer style={{ backgroundColor: "black" }}>
       {/* Main navigator */}
@@ -39,11 +54,10 @@ export default function App() {
           {() => (
             <Tab.Navigator screenOptions={tabNavOptions}>
               {/* Home tab */}
-              <Tab.Screen
-                name="Home"
-                component={HomeTabNavigator}
-                options={homeTabOptions}
-              />
+              <Tab.Screen name="Home" options={homeTabOptions}>
+                {(props) => <HomeTabNavigator {...props} setToken={setToken} />}
+              </Tab.Screen>
+
               {/* Collection tab */}
               <Tab.Screen
                 name="Collection"

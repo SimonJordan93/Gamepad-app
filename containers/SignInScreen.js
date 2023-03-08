@@ -17,30 +17,28 @@ const SignInScreen = ({ setToken }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // const handleSignIn = async () => {
-  //   if (!email || !password) {
-  //     Alert.alert("Error", "Please fill all the fields");
-  //   } else {
-  //     try {
-  //       const response = await axios.post(
-  //         "https://lereacteur-bootcamp-api.herokuapp.com/api/airbnb/user/log_in",
-  //         {
-  //           email,
-  //           password,
-  //         }
-  //       );
-  //       if (response.data.token) {
-  //         setToken(response.data.token);
-  //         Alert.alert("Success", "Login successful!");
-  //       } else {
-  //         Alert.alert("Error", "Login failed. Please try again.");
-  //       }
-  //     } catch (error) {
-  //       console.log(error);
-  //       Alert.alert("Error", "Login failed. Please try again.");
-  //     }
-  //   }
-  // };
+  const handleSignIn = async () => {
+    if (!email || !password) {
+      Alert.alert("Error", "Please fill all the fields");
+    } else {
+      try {
+        const response = await axios.post("http://localhost:3500/signin", {
+          email,
+          password,
+        });
+        if (response.data.token) {
+          setToken(response.data.token);
+          Alert.alert("Success", "Sign in successful!");
+          navigation.navigate("GamesStackNavigator");
+        } else {
+          Alert.alert("Error", "Sign in failed. Please try again.");
+        }
+      } catch (error) {
+        console.log(error);
+        Alert.alert("Error", "Sign in failed. Please try again.");
+      }
+    }
+  };
 
   return (
     <KeyboardAwareScrollView style={styles.container} behavior="padding">
@@ -63,7 +61,7 @@ const SignInScreen = ({ setToken }) => {
           onChangeText={(text) => setPassword(text)}
           secureTextEntry={true}
         />
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={handleSignIn}>
           <Text style={styles.buttonText}>Sign In</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
@@ -99,6 +97,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   input: {
+    color: "white",
     width: "100%",
     height: 40,
     marginBottom: 20,

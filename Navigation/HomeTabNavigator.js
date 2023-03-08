@@ -36,18 +36,14 @@ const headerTitleStyle = {
   fontSize: 12,
 };
 
-const UserStackNavigator = () => (
+const UserStackNavigator = ({ setToken }) => (
   <UserStack.Navigator screenOptions={{ headerShown: false }}>
-    <UserStack.Screen
-      name="SignIn"
-      component={SignInScreen}
-      options={{ title: "Sign in" }}
-    />
-    <UserStack.Screen
-      name="SignUp"
-      component={SignUpScreen}
-      options={{ title: "Sign up" }}
-    />
+    <UserStack.Screen name="SignIn" options={{ title: "Sign in" }}>
+      {(props) => <SignInScreen {...props} setToken={setToken} />}
+    </UserStack.Screen>
+    <UserStack.Screen name="SignUp" options={{ title: "Sign up" }}>
+      {(props) => <SignUpScreen {...props} setToken={setToken} />}
+    </UserStack.Screen>
   </UserStack.Navigator>
 );
 
@@ -138,7 +134,7 @@ const StoresStackNavigator = () => (
   </StoresStack.Navigator>
 );
 
-const HomeTabNavigator = () => (
+const HomeTabNavigator = ({ setToken }) => (
   <Stack.Navigator screenOptions={{ headerShown: false }}>
     <Stack.Screen name="GamesStackNavigator" component={GamesStackNavigator} />
     <Stack.Screen
@@ -153,7 +149,9 @@ const HomeTabNavigator = () => (
       name="StoresStackNavigator"
       component={StoresStackNavigator}
     />
-    <Stack.Screen name="UserStackNavigator" component={UserStackNavigator} />
+    <Stack.Screen name="UserStackNavigator">
+      {(props) => <UserStackNavigator {...props} setToken={setToken} />}
+    </Stack.Screen>
   </Stack.Navigator>
 );
 

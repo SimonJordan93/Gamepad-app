@@ -17,38 +17,36 @@ const SignUpScreen = ({ setToken }) => {
   const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
-  const [description, setDescription] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  // const handleSignUp = async () => {
-  //   if (!email || !username || !description || !password || !confirmPassword) {
-  //     Alert.alert("Error", "Please fill all the fields");
-  //   } else if (password !== confirmPassword) {
-  //     Alert.alert("Error", "Passwords do not match");
-  //   } else {
-  //     try {
-  //       const response = await axios.post(
-  //         "https://lereacteur-bootcamp-api.herokuapp.com/api/airbnb/user/sign_up",
-  //         {
-  //           email,
-  //           username,
-  //           description,
-  //           password,
-  //         }
-  //       );
-  //       if (response.data.token) {
-  //         setToken(response.data.token);
-  //         Alert.alert("Success", "Registration successful!");
-  //       } else {
-  //         Alert.alert("Error", "Registration failed. Please try again.");
-  //       }
-  //     } catch (error) {
-  //       console.log(error);
-  //       Alert.alert("Error", "Registration failed. Please try again.");
-  //     }
-  //   }
-  // };
+  const handleSignUp = async () => {
+    if (!email || !username || !password || !confirmPassword) {
+      Alert.alert("Error", "Please fill all the fields");
+    } else if (password !== confirmPassword) {
+      Alert.alert("Error", "Passwords do not match");
+    } else {
+      try {
+        const response = await axios.post("http://localhost:3500/signup", {
+          email,
+          username,
+          password,
+          confirmPassword,
+        });
+        console.log(response.data);
+        if (response.data.token) {
+          setToken(response.data.token);
+          Alert.alert("Success", "Registration successful!");
+          navigation.navigate("GamesStackNavigator");
+        } else {
+          Alert.alert("Error", "Registration failed. Please try again.");
+        }
+      } catch (error) {
+        console.log(error);
+        Alert.alert("Error", "Registration failed. Please try again.");
+      }
+    }
+  };
 
   return (
     <KeyboardAwareScrollView style={styles.container} behavior="padding">
@@ -85,9 +83,9 @@ const SignUpScreen = ({ setToken }) => {
           onChangeText={(text) => setConfirmPassword(text)}
           secureTextEntry={true}
         />
-        <TouchableHighlight style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={handleSignUp}>
           <Text style={styles.buttonText}>Sign Up</Text>
-        </TouchableHighlight>
+        </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate("SignIn")}>
           <Text style={styles.signInText}>
             Already have an account?{" "}

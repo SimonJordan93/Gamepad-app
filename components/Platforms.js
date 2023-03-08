@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
   supportedPlatforms: {
     flexDirection: "row",
     paddingHorizontal: 5,
-    paddingTop: 10,
+    paddingTop: 5,
   },
   platformLogos: {
     height: 20,

@@ -170,6 +170,7 @@ const styles = StyleSheet.create({
   },
   ratingBox: {
     flexDirection: "row",
+    alignItems: "flex-end",
   },
   ratingCount: {
     padding: 5,
@@ -178,13 +179,15 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   rating: {
-    borderColor: "white",
+    marginTop: 10,
+    textAlign: "center",
     padding: 5,
-    borderWidth: 2,
-    borderRadius: 5,
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: "bold",
-    color: "#fff",
+    color: "#000",
+    backgroundColor: "white",
+    borderRadius: 3,
+    overflow: "hidden",
   },
   description: {
     color: "#fff",
