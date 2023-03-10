@@ -28,7 +28,7 @@ export default function GenresScreen() {
       const fetchGenres = async () => {
         try {
           const resGenres = await axios.get(
-            `https://api.rawg.io/api/genres?key=b01f1892725446428389154406012e19`
+            `https://site--gamepad-back--6h6hqnm2zbqs.code.run/genres`
           );
 
           setGenres(resGenres.data.results);

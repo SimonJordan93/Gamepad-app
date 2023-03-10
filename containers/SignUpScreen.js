@@ -27,12 +27,15 @@ const SignUpScreen = ({ setToken }) => {
       Alert.alert("Error", "Passwords do not match");
     } else {
       try {
-        const response = await axios.post("http://localhost:3500/signup", {
-          email,
-          username,
-          password,
-          confirmPassword,
-        });
+        const response = await axios.post(
+          "https://site--gamepad-back--6h6hqnm2zbqs.code.run/signup",
+          {
+            email,
+            username,
+            password,
+            confirmPassword,
+          }
+        );
         console.log(response.data);
         if (response.data.token) {
           setToken(response.data.token);

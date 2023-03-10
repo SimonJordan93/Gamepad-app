@@ -22,10 +22,13 @@ const SignInScreen = ({ setToken }) => {
       Alert.alert("Error", "Please fill all the fields");
     } else {
       try {
-        const response = await axios.post("http://localhost:3500/signin", {
-          email,
-          password,
-        });
+        const response = await axios.post(
+          "https://site--gamepad-back--6h6hqnm2zbqs.code.run/signin",
+          {
+            email,
+            password,
+          }
+        );
         if (response.data.token) {
           setToken(response.data.token);
           Alert.alert("Success", "Sign in successful!");

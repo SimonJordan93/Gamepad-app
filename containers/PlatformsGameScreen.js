@@ -13,9 +13,10 @@ import {
 import axios from "axios";
 import { useFocusEffect } from "@react-navigation/native";
 
-import renderPlatforms from "../components/Platforms";
+import ReviewSection from "../components/ReviewSection";
+import GameCard from "../components/GameCard";
 
-export default function PlatformsGameScreen({ route }) {
+export default function PlatformsGameScreen({ route, userToken }) {
   const [game, setGame] = useState(null);
   const gameId = route.params.id;
 
@@ -24,7 +25,7 @@ export default function PlatformsGameScreen({ route }) {
       const fetchGame = async () => {
         try {
           const resGame = await axios.get(
-            `https://api.rawg.io/api/games/${gameId}?key=b01f1892725446428389154406012e19`
+            `https://site--gamepad-back--6h6hqnm2zbqs.code.run/game/${gameId}`
           );
           setGame(resGame.data);
         } catch (error) {
@@ -55,66 +56,8 @@ export default function PlatformsGameScreen({ route }) {
       >
         <Text style={styles.title}>{game.name}</Text>
       </ImageBackground>
-      <View style={styles.card}>
-        <View style={styles.cardHeader}>
-          {renderPlatforms({ platformdData: game })}
-          <View style={styles.ratingBox}>
-            <Text style={styles.ratingCount}>+ {game.ratings_count}</Text>
-            <Text style={styles.rating}>{game.rating}</Text>
-          </View>
-        </View>
-
-        {game.description_raw && (
-          <Text style={styles.description}>{game.description_raw}</Text>
-        )}
-
-        {game.metacritic && (
-          <View style={styles.metaContainer}>
-            <Text style={styles.metaLabel}>Metacritic Score:</Text>
-            <Text style={styles.metaValue}>{game.metacritic}</Text>
-          </View>
-        )}
-
-        {game.released && (
-          <View style={styles.metaContainer}>
-            <Text style={styles.metaLabel}>Release Date:</Text>
-            <Text style={styles.metaValue}>{game.released}</Text>
-          </View>
-        )}
-
-        {game.publishers &&
-          game.publishers.length > 0 &&
-          game.publishers[0].name && (
-            <View style={styles.metaContainer}>
-              <Text style={styles.metaLabel}>Publishers:</Text>
-              <Text style={styles.metaValue}>{game.publishers[0].name}</Text>
-            </View>
-          )}
-
-        {game.genres && (
-          <View style={styles.metaContainer}>
-            <Text style={styles.metaLabel}>Genres:</Text>
-            {game.genres.map((genre) => {
-              return (
-                <Text key={genre.id} style={styles.metaValue}>
-                  {genre.name}
-                </Text>
-              );
-            })}
-          </View>
-        )}
-
-        {game.website && (
-          <View style={styles.metaContainer}>
-            <Text style={styles.metaLabel}>Website:</Text>
-            <TouchableOpacity onPress={() => Linking.openURL(game.website)}>
-              <Text style={[styles.metaValue, styles.link]}>
-                {game.website}
-              </Text>
-            </TouchableOpacity>
-          </View>
-        )}
-      </View>
+      <GameCard gameId={gameId} game={game} />
+      <ReviewSection userToken={userToken} gameId={gameId} />
     </ScrollView>
   );
 }
@@ -149,64 +92,5 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.8,
     shadowRadius: 5,
     elevation: 30,
-  },
-  card: {
-    backgroundColor: "#000",
-    padding: 20,
-    shadowColor: "#333",
-    shadowOffset: {
-      width: 0,
-      height: 5,
-    },
-    shadowOpacity: 0.5,
-    shadowRadius: 3,
-    elevation: 5,
-  },
-  cardHeader: {
-    marginBottom: 10,
-  },
-  ratingBox: {
-    flexDirection: "row",
-    alignItems: "flex-end",
-  },
-  ratingCount: {
-    padding: 5,
-    fontSize: 18,
-    color: "#fff",
-    marginRight: 10,
-  },
-  rating: {
-    marginTop: 10,
-    textAlign: "center",
-    padding: 5,
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "#000",
-    backgroundColor: "white",
-    borderRadius: 3,
-    overflow: "hidden",
-  },
-  description: {
-    color: "#fff",
-    fontSize: 16,
-    marginBottom: 10,
-  },
-  metaContainer: {
-    flexDirection: "row",
-    marginBottom: 5,
-  },
-  metaLabel: {
-    color: "#999",
-    fontSize: 16,
-    fontWeight: "bold",
-    marginRight: 5,
-  },
-  metaValue: {
-    color: "#fff",
-    fontSize: 16,
-    marginRight: 5,
-  },
-  link: {
-    textDecorationLine: "underline",
   },
 });

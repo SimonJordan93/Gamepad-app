@@ -39,7 +39,7 @@ export default function FilterGenresGamesScreen({ route }) {
       const fetchGames = async () => {
         try {
           const resGames = await axios.get(
-            `https://api.rawg.io/api/games?key=b01f1892725446428389154406012e19&genres=${route.params.genreId}&search=${debouncedGameSearch}&page=${page}&ordering=${sortingOption}`
+            `https://site--gamepad-back--6h6hqnm2zbqs.code.run/games?genres=${route.params.genreId}&search=${debouncedGameSearch}&page=${page}&ordering=${sortingOption}`
           );
           if (page === 1) {
             setGames(resGames.data.results);

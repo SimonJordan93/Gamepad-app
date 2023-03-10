@@ -39,8 +39,9 @@ export default function GamesScreen() {
       const fetchGames = async () => {
         try {
           const resGames = await axios.get(
-            `https://api.rawg.io/api/games?key=b01f1892725446428389154406012e19&search=${debouncedGameSearch}&page=${page}&ordering=${sortingOption}`
+            `https://site--gamepad-back--6h6hqnm2zbqs.code.run/games?${debouncedGameSearch}&page=${page}&ordering=${sortingOption}`
           );
+          // console.log(resGames.data);
           if (page === 1) {
             setGames(resGames.data.results);
             setLoading(false);
@@ -52,6 +53,7 @@ export default function GamesScreen() {
           console.log(error);
         }
       };
+
       fetchGames();
 
       return () => {

@@ -27,7 +27,7 @@ export default function PlatformsScreen() {
       const fetchPlatforms = async () => {
         try {
           const resPlatforms = await axios.get(
-            `https://api.rawg.io/api/platforms?key=b01f1892725446428389154406012e19`
+            `https://site--gamepad-back--6h6hqnm2zbqs.code.run/platforms`
           );
 
           setPlatforms(resPlatforms.data.results);

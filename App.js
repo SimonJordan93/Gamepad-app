@@ -55,12 +55,18 @@ export default function App() {
             <Tab.Navigator screenOptions={tabNavOptions}>
               {/* Home tab */}
               <Tab.Screen name="Home" options={homeTabOptions}>
-                {(props) => <HomeTabNavigator {...props} setToken={setToken} />}
+                {(props) => (
+                  <HomeTabNavigator
+                    {...props}
+                    setToken={setToken}
+                    userToken={userToken}
+                  />
+                )}
               </Tab.Screen>
 
               {/* Collection tab */}
               <Tab.Screen
-                name="Collection"
+                name="Favorites"
                 component={FavoritesScreen}
                 options={{ headerShown: false }}
               />

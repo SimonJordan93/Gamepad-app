@@ -28,7 +28,7 @@ export default function StoresScreen() {
       const fetchStores = async () => {
         try {
           const resStores = await axios.get(
-            `https://api.rawg.io/api/stores?key=b01f1892725446428389154406012e19`
+            `https://site--gamepad-back--6h6hqnm2zbqs.code.run/stores`
           );
 
           setStores(resStores.data.results);

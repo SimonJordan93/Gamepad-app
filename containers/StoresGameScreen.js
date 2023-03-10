@@ -13,9 +13,10 @@ import {
 import axios from "axios";
 import { useFocusEffect } from "@react-navigation/native";
 
-import renderPlatforms from "../components/Platforms";
+import ReviewSection from "../components/ReviewSection";
+import GameCard from "../components/GameCard";
 
-export default function StoresGameScreen({ route }) {
+export default function StoresGameScreen({ route, userToken }) {
   const [game, setGame] = useState(null);
   const gameId = route.params.id;
 
@@ -24,7 +25,7 @@ export default function StoresGameScreen({ route }) {
       const fetchGame = async () => {
         try {
           const resGame = await axios.get(
-            `https://api.rawg.io/api/games/${gameId}?key=b01f1892725446428389154406012e19`
+            `https://site--gamepad-back--6h6hqnm2zbqs.code.run/game/${gameId}`
           );
           setGame(resGame.data);
         } catch (error) {
@@ -55,66 +56,8 @@ export default function StoresGameScreen({ route }) {
       >
         <Text style={styles.title}>{game.name}</Text>
       </ImageBackground>
-      <View style={styles.card}>
-        <View style={styles.cardHeader}>
-          {renderPlatforms({ platformdData: game })}
-          <View style={styles.ratingBox}>
-            <Text style={styles.ratingCount}>+ {game.ratings_count}</Text>
-            <Text style={styles.rating}>{game.rating}</Text>
-          </View>
-        </View>
-
-        {game.description_raw && (
-          <Text style={styles.description}>{game.description_raw}</Text>
-        )}
-
-        {game.metacritic && (
-          <View style={styles.metaContainer}>
-            <Text style={styles.metaLabel}>Metacritic Score:</Text>
-            <Text style={styles.metaValue}>{game.metacritic}</Text>
-          </View>
-        )}
-
-        {game.released && (
-          <View style={styles.metaContainer}>
-            <Text style={styles.metaLabel}>Release Date:</Text>
-            <Text style={styles.metaValue}>{game.released}</Text>
-          </View>
-        )}
-
-        {game.publishers &&
-          game.publishers.length > 0 &&
-          game.publishers[0].name && (
-            <View style={styles.metaContainer}>
-              <Text style={styles.metaLabel}>Publishers:</Text>
-              <Text style={styles.metaValue}>{game.publishers[0].name}</Text>
-            </View>
-          )}
-
-        {game.genres && (
-          <View style={styles.metaContainer}>
-            <Text style={styles.metaLabel}>Genres:</Text>
-            {game.genres.map((genre) => {
-              return (
-                <Text key={genre.id} style={styles.metaValue}>
-                  {genre.name}
-                </Text>
-              );
-            })}
-          </View>
-        )}
-
-        {game.website && (
-          <View style={styles.metaContainer}>
-            <Text style={styles.metaLabel}>Website:</Text>
-            <TouchableOpacity onPress={() => Linking.openURL(game.website)}>
-              <Text style={[styles.metaValue, styles.link]}>
-                {game.website}
-              </Text>
-            </TouchableOpacity>
-          </View>
-        )}
-      </View>
+      <GameCard gameId={gameId} game={game} />
+      <ReviewSection userToken={userToken} gameId={gameId} />
     </ScrollView>
   );
 }

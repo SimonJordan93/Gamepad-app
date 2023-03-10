@@ -47,7 +47,7 @@ const UserStackNavigator = ({ setToken }) => (
   </UserStack.Navigator>
 );
 
-const GamesStackNavigator = () => (
+const GamesStackNavigator = ({ userToken }) => (
   <GamesStack.Navigator
     screenOptions={{
       headerShown: Platform.OS === "ios" ? true : false,
@@ -60,15 +60,13 @@ const GamesStackNavigator = () => (
       component={GamesScreen}
       options={{ title: "Games" }}
     />
-    <GamesStack.Screen
-      name="Game"
-      component={GameScreen}
-      options={{ title: "" }}
-    />
+    <GamesStack.Screen name="Game" options={{ title: "" }}>
+      {(props) => <GameScreen {...props} userToken={userToken} />}
+    </GamesStack.Screen>
   </GamesStack.Navigator>
 );
 
-const PlatformsStackNavigator = () => (
+const PlatformsStackNavigator = ({ userToken }) => (
   <PlatformsStack.Navigator
     screenOptions={{
       headerShown: Platform.OS === "ios" ? true : false,
@@ -82,15 +80,13 @@ const PlatformsStackNavigator = () => (
       component={FilteredPlatformsGamesScreen}
       options={{ title: "" }}
     />
-    <PlatformsStack.Screen
-      name="PlatformsGame"
-      component={PlatformsGameScreen}
-      options={{ title: "" }}
-    />
+    <PlatformsStack.Screen name="PlatformsGame" options={{ title: "" }}>
+      {(props) => <PlatformsGameScreen {...props} userToken={userToken} />}
+    </PlatformsStack.Screen>
   </PlatformsStack.Navigator>
 );
 
-const GenresStackNavigator = () => (
+const GenresStackNavigator = ({ userToken }) => (
   <GenresStack.Navigator
     screenOptions={{
       headerShown: Platform.OS === "ios" ? true : false,
@@ -104,15 +100,13 @@ const GenresStackNavigator = () => (
       component={FilteredGenresGamesScreen}
       options={{ title: "" }}
     />
-    <GenresStack.Screen
-      name="GenresGame"
-      component={GenresGameScreen}
-      options={{ title: "" }}
-    />
+    <GenresStack.Screen name="GenresGame" options={{ title: "" }}>
+      {(props) => <GenresGameScreen {...props} userToken={userToken} />}
+    </GenresStack.Screen>
   </GenresStack.Navigator>
 );
 
-const StoresStackNavigator = () => (
+const StoresStackNavigator = ({ userToken }) => (
   <StoresStack.Navigator
     screenOptions={{
       headerShown: Platform.OS === "ios" ? true : false,
@@ -126,29 +120,26 @@ const StoresStackNavigator = () => (
       component={FilteredStoresGamesScreen}
       options={{ title: "" }}
     />
-    <StoresStack.Screen
-      name="StoresGame"
-      component={StoresGameScreen}
-      options={{ title: "" }}
-    />
+    <StoresStack.Screen name="StoresGame" options={{ title: "" }}>
+      {(props) => <StoresGameScreen {...props} userToken={userToken} />}
+    </StoresStack.Screen>
   </StoresStack.Navigator>
 );
 
-const HomeTabNavigator = ({ setToken }) => (
+const HomeTabNavigator = ({ setToken, userToken }) => (
   <Stack.Navigator screenOptions={{ headerShown: false }}>
-    <Stack.Screen name="GamesStackNavigator" component={GamesStackNavigator} />
-    <Stack.Screen
-      name="PlatformsStackNavigator"
-      component={PlatformsStackNavigator}
-    />
-    <Stack.Screen
-      name="GenresStackNavigator"
-      component={GenresStackNavigator}
-    />
-    <Stack.Screen
-      name="StoresStackNavigator"
-      component={StoresStackNavigator}
-    />
+    <Stack.Screen name="GamesStackNavigator">
+      {(props) => <GamesStackNavigator {...props} userToken={userToken} />}
+    </Stack.Screen>
+    <Stack.Screen name="PlatformsStackNavigator">
+      {(props) => <PlatformsStackNavigator {...props} userToken={userToken} />}
+    </Stack.Screen>
+    <Stack.Screen name="GenresStackNavigator">
+      {(props) => <GenresStackNavigator {...props} userToken={userToken} />}
+    </Stack.Screen>
+    <Stack.Screen name="StoresStackNavigator">
+      {(props) => <StoresStackNavigator {...props} userToken={userToken} />}
+    </Stack.Screen>
     <Stack.Screen name="UserStackNavigator">
       {(props) => <UserStackNavigator {...props} setToken={setToken} />}
     </Stack.Screen>
